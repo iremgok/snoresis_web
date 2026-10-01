@@ -143,10 +143,10 @@ export const ProductsSection = () => (
       <div className="mb-14">
         <div className="max-w-xl">
           <p className="section-label">
-          <span className="h-0.5 w-10 rounded-full bg-brand" />
-          Ürünler
-        </p>
-          <h2 className="section-title text-ink">Gecenizi tamamlayan üçlü</h2>
+            <span className="h-0.5 w-10 rounded-full bg-brand" />
+            Ürünler
+          </p>
+          <h2 className="section-title-compact text-ink">Gecenizi tamamlayan üçlü</h2>
           <p className="mt-4 text-slate-600">
             Akıllı yüzük ölçer, şarj ünitesi hazır tutar, kılıf yolda korur. Renginizi seçin, sepete ekleyin.
           </p>

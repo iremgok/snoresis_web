@@ -1,8 +1,11 @@
 import { useState, type ChangeEvent, type FormEvent, type ReactNode } from 'react';
 import { ArrowUpRight, CircleCheck, Mail, MapPin, MessageCircle, Phone, Send, type LucideIcon } from 'lucide-react';
+import { useToast } from '../../context/toast';
 import { SITE } from '../../data/site';
+import { sendContactMessage } from '../../lib/contact';
 import { Field, TextAreaField } from '../ui/FormField';
 import { PhoneNumber } from '../ui/PhoneNumber';
+import { SnoresisLoading } from '../ui/SnoresisLoading';
 
 const CHANNELS: { icon: LucideIcon; label: string; value: ReactNode; href: string; external?: boolean; accent: string }[] = [
   {
@@ -41,6 +44,7 @@ type Form = { name: string; email: string; message: string };
 type Errors = Partial<Record<keyof Form, string>>;
 
 const EMPTY: Form = { name: '', email: '', message: '' };
+const LABELS: Record<keyof Form, string> = { name: 'Ad Soyad', email: 'E-posta', message: 'Mesaj' };
 
 const validate = (f: Form): Errors => {
   const e: Errors = {};
@@ -50,7 +54,10 @@ const validate = (f: Form): Errors => {
   return e;
 };
 
+const SEND_FAILED = 'Mesajınız gönderilemedi';
+
 const ContactForm = () => {
+  const { notify, notifyError } = useToast();
   const [form, setForm] = useState<Form>(EMPTY);
   const [errors, setErrors] = useState<Errors>({});
   const [status, setStatus] = useState<'idle' | 'sending' | 'sent'>('idle');
@@ -66,22 +73,33 @@ const ContactForm = () => {
     },
   });
 
-  const submit = (e: FormEvent<HTMLFormElement>) => {
+  const submit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const found = validate(form);
     setErrors(found);
     const first = Object.keys(found)[0];
     if (first) {
       e.currentTarget.querySelector<HTMLElement>(`[name="${first}"]`)?.focus();
+      notify({
+        tone: 'error',
+        title: SEND_FAILED,
+        message: `Eksik ya da hatalı alanlar: ${Object.keys(found)
+          .map((k) => LABELS[k as keyof Form])
+          .join(', ')}. Lütfen işaretli alanları kontrol ediniz.`,
+      });
       return;
     }
     setStatus('sending');
-    // TODO: Mesajı bir API'ye / e-posta servisine iletin. Şimdilik gönderim simüle ediliyor.
-    window.setTimeout(() => {
-      setSentTo(form.email.trim());
+    const email = form.email.trim();
+    try {
+      await sendContactMessage({ name: form.name.trim(), email, message: form.message.trim() });
+      setSentTo(email);
       setForm(EMPTY);
       setStatus('sent');
-    }, 900);
+    } catch (err) {
+      setStatus('idle');
+      notifyError(err, SEND_FAILED, 'Mesajınız gönderilemedi. Lütfen internet bağlantınızı ve alanları kontrol ediniz.');
+    }
   };
 
   if (status === 'sent') {
@@ -103,7 +121,8 @@ const ContactForm = () => {
   }
 
   return (
-    <form onSubmit={submit} noValidate className="space-y-4">
+    <form onSubmit={submit} noValidate aria-busy={status === 'sending'} className="relative space-y-4">
+      {status === 'sending' && <SnoresisLoading variant="overlay" label="Mesajınız gönderiliyor..." />}
       <div className="grid gap-4 sm:grid-cols-2">
         <Field label="Ad Soyad" autoComplete="name" placeholder="Adınız Soyadınız" {...bind('name')} />
         <Field label="E-posta Adresi" type="email" autoComplete="email" placeholder="ornek@eposta.com" {...bind('email')} />

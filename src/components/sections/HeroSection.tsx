@@ -20,7 +20,7 @@ const HeroVisual = () => (
     {/* halkalar */}
     <div className="absolute inset-0 rounded-full border border-white/10" />
     <div className="absolute inset-[11%] rounded-full border border-white/10" />
-    <div className="absolute inset-[22%] animate-breathe rounded-full bg-gradient-to-br from-brand/50 via-violet/30 to-transparent blur-2xl" />
+    <div className="absolute inset-[22%] animate-breathe rounded-full bg-gradient-to-br from-brand/50 via-violet/30 to-transparent blur-2xl blob" />
 
     <svg viewBox="0 0 400 400" className="absolute inset-0 h-full w-full" aria-hidden="true">
       <defs>
@@ -106,9 +106,9 @@ export const HeroSection = () => (
     id="top"
     className="relative isolate overflow-hidden bg-[radial-gradient(120%_90%_at_85%_10%,#0066FF_0%,#0b3a8f_35%,#0A192F_75%)] pt-28 pb-24 text-white md:pt-36 md:pb-32"
   >
-    <div className="absolute -top-40 -left-32 -z-10 h-[28rem] w-[28rem] animate-drift rounded-full bg-violet/25 blur-3xl" />
-    <div className="absolute right-[-10%] bottom-[-30%] -z-10 h-[30rem] w-[30rem] rounded-full bg-brand/30 blur-3xl" />
-    <SoundwaveMesh className="-z-10 text-white opacity-[0.06]" />
+    <div className="absolute -top-40 -left-32 -z-10 h-[28rem] w-[28rem] animate-drift rounded-full bg-violet/25 blur-3xl blob" />
+    <div className="absolute right-[-10%] bottom-[-30%] -z-10 h-[30rem] w-[30rem] rounded-full bg-brand/30 blur-3xl blob" />
+    <SoundwaveMesh className="-z-10 text-white opacity-[0.04]" />
 
     <div className="container-x grid items-center gap-14 lg:grid-cols-[1.05fr_1fr]">
       <div className="max-w-xl">

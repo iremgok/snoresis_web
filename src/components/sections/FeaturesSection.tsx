@@ -93,8 +93,8 @@ const FEATURES: { icon: LucideIcon; title: string; text: string; glyph: ReactNod
 
 export const FeaturesSection = () => (
   <section id="ozellikler" className="relative isolate overflow-hidden bg-night py-24 text-white md:py-32">
-    <div className="absolute top-1/3 -left-40 -z-10 h-[30rem] w-[30rem] rounded-full bg-brand/25 blur-3xl" />
-    <div className="absolute -right-32 -bottom-40 -z-10 h-[26rem] w-[26rem] rounded-full bg-violet/20 blur-3xl" />
+    <div className="absolute top-1/3 -left-40 -z-10 h-[30rem] w-[30rem] rounded-full bg-brand/25 blur-3xl blob" />
+    <div className="absolute -right-32 -bottom-40 -z-10 h-[26rem] w-[26rem] rounded-full bg-violet/20 blur-3xl blob" />
     <SoundwaveMesh className="-z-10 text-white opacity-[0.04]" />
 
     <div className="container-x">
@@ -110,12 +110,12 @@ export const FeaturesSection = () => (
         {FEATURES.map(({ icon: Icon, title, text, glyph, tint }, i) => (
           <article
             key={title}
-            className={`group relative overflow-hidden rounded-3xl border border-white/10 bg-white/[0.04] p-7 backdrop-blur-xl transition duration-300 hover:border-white/25 hover:bg-white/[0.07] md:p-8 ${
+            className={`group relative overflow-hidden rounded-3xl border border-white/10 bg-white/[0.04] p-7 backdrop-blur-md transition duration-300 hover:border-white/25 hover:bg-white/[0.07] md:p-8 ${
               i % 2 === 1 ? 'sm:translate-y-8' : ''
             }`}
           >
             <div
-              className={`pointer-events-none absolute -top-16 -right-16 h-40 w-40 rounded-full bg-gradient-to-br ${tint} to-transparent blur-2xl transition group-hover:scale-125`}
+              className={`pointer-events-none absolute -top-16 -right-16 h-40 w-40 rounded-full bg-gradient-to-br ${tint} to-transparent blur-2xl blob transition group-hover:scale-125`}
             />
             <div className="flex items-start justify-between">
               <span className="grid h-12 w-12 place-items-center rounded-2xl border border-white/15 bg-white/10">

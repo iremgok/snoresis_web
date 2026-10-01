@@ -24,6 +24,7 @@
   --animate-slide-in: slide-in 0.35s cubic-bezier(0.22, 1, 0.36, 1);
   --animate-fade-in: fade-in 0.25s ease-out;
   --animate-rise: rise 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+  --animate-glow: glow 1.8s ease-in-out infinite;
 
   @keyframes breathe {
     0%, 100% { transform: scale(1); opacity: 0.9; }
@@ -49,6 +50,10 @@
     from { opacity: 0; }
     to { opacity: 1; }
   }
+  @keyframes glow {
+    0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgb(123 63 242 / 0.35), 0 12px 32px -10px rgb(0 102 255 / 0.55); }
+    50% { transform: scale(1.06); box-shadow: 0 0 0 14px rgb(123 63 242 / 0), 0 16px 44px -8px rgb(0 102 255 / 0.75); }
+  }
   @keyframes rise {
     from { opacity: 0; transform: translateY(16px) scale(0.98); }
     to { opacity: 1; transform: translateY(0) scale(1); }
@@ -58,6 +63,7 @@
 @layer base {
   html {
     scroll-behavior: smooth;
+    overflow-y: auto;
     -webkit-text-size-adjust: 100%;
   }
   body {
@@ -90,9 +96,20 @@
 @utility section-title {
   @apply mt-4 text-[2.6rem] leading-[1.06] font-bold sm:text-[3.5rem];
 }
-/* "Hakkımızda" ve "Ürünler" bölüm etiketleri: küçük üst yazı yerine belirgin başlık */
+/* "Hakkımızda" ve "Ürünler" bölümleri: genel başlıklardan ~%12 küçük, daha dengeli */
+@utility section-title-compact {
+  @apply mt-4 text-[2.3rem] leading-[1.08] font-bold sm:text-[3.1rem];
+}
+/* "Hakkımızda" ve "Ürünler" bölüm etiketleri */
 @utility section-label {
-  @apply inline-flex items-center gap-3 font-display text-[1.6rem] leading-none font-bold tracking-tight text-brand sm:text-[1.75rem];
+  @apply inline-flex items-center gap-3 font-display text-[1.4rem] leading-none font-bold tracking-tight text-brand sm:text-[1.55rem];
+}
+/* Bulanık dekor lekeleri: kendi GPU katmanında bir kez rasterize edilir, kaydırmada yeniden boyanmaz */
+@utility blob {
+  @apply pointer-events-none;
+  transform: translateZ(0);
+  will-change: transform;
+  backface-visibility: hidden;
 }
 @utility eyebrow {
   @apply inline-flex items-center gap-2 text-xs font-semibold tracking-[0.18em] uppercase;

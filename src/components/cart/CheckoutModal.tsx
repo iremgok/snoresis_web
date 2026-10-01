@@ -1,10 +1,12 @@
 import { useState, type ChangeEvent, type FormEvent } from 'react';
 import { ArrowLeft, CircleCheck, CreditCard, Lock } from 'lucide-react';
 import { useCart } from '../../context/cart';
+import { useToast } from '../../context/toast';
 import { formatPrice } from '../../lib/format';
 import type { CartItem } from '../../types';
 import { Field } from '../ui/FormField';
 import { Modal } from '../ui/Modal';
+import { SnoresisLoading } from '../ui/SnoresisLoading';
 
 type Form = {
   name: string;
@@ -20,6 +22,17 @@ type Form = {
 type Errors = Partial<Record<keyof Form, string>>;
 
 const EMPTY: Form = { name: '', email: '', phone: '', address: '', cardName: '', cardNumber: '', expiry: '', cvv: '' };
+
+const LABELS: Record<keyof Form, string> = {
+  name: 'Ad Soyad',
+  email: 'E-posta',
+  phone: 'Telefon',
+  address: 'Adres',
+  cardName: 'Kart üzerindeki isim',
+  cardNumber: 'Kart numarası',
+  expiry: 'Son kullanma',
+  cvv: 'CVV',
+};
 
 const digits = (v: string) => v.replace(/\D/g, '');
 
@@ -107,6 +120,7 @@ const Success = ({ order, onClose }: { order: Order; onClose: () => void }) => (
 
 export const CheckoutModal = () => {
   const { items, total, clear, closePanel, openPanel } = useCart();
+  const { notify } = useToast();
   const [form, setForm] = useState<Form>(EMPTY);
   const [errors, setErrors] = useState<Errors>({});
   const [submitting, setSubmitting] = useState(false);
@@ -127,8 +141,14 @@ export const CheckoutModal = () => {
     e.preventDefault();
     const found = validate(form);
     setErrors(found);
-    if (Object.keys(found).length) {
-      document.querySelector<HTMLInputElement>(`[name="${Object.keys(found)[0]}"]`)?.focus();
+    const keys = Object.keys(found) as (keyof Form)[];
+    if (keys.length) {
+      document.querySelector<HTMLInputElement>(`[name="${keys[0]}"]`)?.focus();
+      notify({
+        tone: 'error',
+        title: 'Ödeme tamamlanamadı',
+        message: `Eksik ya da hatalı alanlar: ${keys.map((k) => LABELS[k]).join(', ')}. Lütfen kontrol ediniz.`,
+      });
       return;
     }
     setSubmitting(true);
@@ -157,6 +177,7 @@ export const CheckoutModal = () => {
 
   return (
     <Modal title="Ödeme" onClose={close}>
+      {submitting && <SnoresisLoading variant="overlay" label="Ödemeniz işleniyor..." />}
       <form onSubmit={submit} noValidate className="flex min-h-0 flex-1 flex-col">
         <div className="space-y-6 overflow-y-auto px-6 pb-6">
           <div className="flex items-center justify-between rounded-2xl bg-mist px-4 py-3 text-sm">
