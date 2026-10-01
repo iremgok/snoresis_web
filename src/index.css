@@ -1,1 +1,122 @@
 @import "tailwindcss";
+
+@theme {
+  --font-display: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+
+  --color-brand: #0066ff;
+  --color-brand-deep: #0052cc;
+  --color-violet: #7b3ff2;
+  --color-night: #0a192f;
+  --color-night-2: #0f2442;
+  --color-ink: #0b1526;
+  --color-mist: #f4f6fb;
+  --color-paper: #fbfaf7;
+  --color-line: #e4e8f0;
+
+  --shadow-soft: 0 1px 2px rgb(11 21 38 / 0.04), 0 8px 24px -12px rgb(11 21 38 / 0.12);
+  --shadow-lift: 0 2px 4px rgb(11 21 38 / 0.04), 0 24px 48px -20px rgb(11 21 38 / 0.22);
+
+  --animate-breathe: breathe 6s ease-in-out infinite;
+  --animate-drift: drift 18s ease-in-out infinite;
+  --animate-wave: wave 3.2s linear infinite;
+  --animate-pop: pop 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+  --animate-slide-in: slide-in 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+  --animate-fade-in: fade-in 0.25s ease-out;
+  --animate-rise: rise 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+
+  @keyframes breathe {
+    0%, 100% { transform: scale(1); opacity: 0.9; }
+    50% { transform: scale(1.04); opacity: 1; }
+  }
+  @keyframes drift {
+    0%, 100% { transform: translate3d(0, 0, 0); }
+    50% { transform: translate3d(2%, -3%, 0); }
+  }
+  @keyframes wave {
+    to { stroke-dashoffset: -240; }
+  }
+  @keyframes pop {
+    0% { transform: scale(1); }
+    40% { transform: scale(1.35); }
+    100% { transform: scale(1); }
+  }
+  @keyframes slide-in {
+    from { transform: translateX(100%); }
+    to { transform: translateX(0); }
+  }
+  @keyframes fade-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  @keyframes rise {
+    from { opacity: 0; transform: translateY(16px) scale(0.98); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+  }
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    @apply bg-paper font-sans text-ink antialiased;
+  }
+  section[id] {
+    scroll-margin-top: 5rem;
+  }
+  h1, h2, h3, h4, nav a {
+    @apply font-display;
+    font-style: normal;
+    font-synthesis: none;
+  }
+  h1, h2, h3, h4 {
+    letter-spacing: -0.025em;
+  }
+  ::selection {
+    background: rgb(0 102 255 / 0.18);
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-brand);
+    outline-offset: 3px;
+  }
+}
+
+@utility container-x {
+  @apply mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8;
+}
+/* Bölüm başlıkları: önceki 36/48px'e göre ~%17 daha büyük */
+@utility section-title {
+  @apply mt-4 text-[2.6rem] leading-[1.06] font-bold sm:text-[3.5rem];
+}
+/* "Hakkımızda" ve "Ürünler" bölüm etiketleri: küçük üst yazı yerine belirgin başlık */
+@utility section-label {
+  @apply inline-flex items-center gap-3 font-display text-[1.6rem] leading-none font-bold tracking-tight text-brand sm:text-[1.75rem];
+}
+@utility eyebrow {
+  @apply inline-flex items-center gap-2 text-xs font-semibold tracking-[0.18em] uppercase;
+}
+@utility btn {
+  @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold transition duration-200 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-50 cursor-pointer;
+}
+@utility btn-primary {
+  @apply btn bg-brand text-white shadow-[0_8px_24px_-8px_rgb(0_102_255/0.6)] hover:bg-brand-deep;
+}
+@utility btn-ghost {
+  @apply btn border border-line bg-white text-ink hover:border-ink/30;
+}
+@utility field {
+  @apply w-full rounded-xl border border-line bg-white px-4 py-3 text-sm text-ink placeholder:text-slate-400 transition outline-none focus:border-brand focus:ring-4 focus:ring-brand/10;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

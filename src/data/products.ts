@@ -1,38 +1,45 @@
-﻿import { Product } from '../types';
+import type { ColorOption, Product } from '../types';
+
+export const COLORS: ColorOption[] = [
+  { name: 'Siyah', hex: '#1C1D21' },
+  { name: 'Beyaz', hex: '#F3F2EE' },
+  { name: 'Gri', hex: '#9AA0AA' },
+  { name: 'Gold', hex: '#C9A25E' },
+  { name: 'Pembe', hex: '#E8A7B6' },
+  { name: 'Mavi', hex: '#3D7BEA' },
+];
 
 export const PRODUCTS: Product[] = [
   {
-    id: '1',
-    name: 'Snoresis Pro Cihazı',
-    description: 'Gelişmiş sensörler ve AI destekli horlama ve apne önleme cihazı',
+    id: 'ring',
+    name: 'Snoresis Akıllı Yüzük',
+    tagline: 'SpO2 · Nabız · Apne Takibi',
+    description:
+      'Gece boyunca parmağınızda, fark etmeyeceğiniz kadar hafif. Kandaki oksijen, nabız ve nefes duraksamalarını kesintisiz ölçer.',
+    highlights: ['SpO2 ölçümü', 'Nabız takibi', 'Apne tespiti', 'Bluetooth BLE'],
     price: 6999,
-    imageIcon: '📱',
-    colors: [
-      { name: 'Gümüş', hex: '#E2E8F0' },
-      { name: 'Pembe', hex: '#EC4899' },
-      { name: 'Mavi', hex: '#3B82F6' },
-      { name: 'Siyah', hex: '#000000' },
-      { name: 'Yeşil', hex: '#10B981' }
-    ]
+    art: 'ring',
+    colors: COLORS,
+    featured: true,
   },
   {
-    id: '2',
-    name: 'Akıllı Uyku Bandı',
-    description: 'Uyku kalitenizi anlık takip eden konforlu akıllı bant',
+    id: 'dock',
+    name: 'Şarj Aleti',
+    tagline: 'Manyetik Şarj Ünitesi',
+    description: 'Yüzüğü bırakın, mıknatıs gerisini halletsin. Komodininize yakışan sade bir şarj ünitesi.',
+    highlights: ['Manyetik hizalama', 'Komodin dostu'],
     price: 499,
-    imageIcon: '⌚',
-    colors: [
-      { name: 'Lacivert', hex: '#1E3A8A' },
-      { name: 'Kırmızı', hex: '#EF4444' },
-      { name: 'Yeşil', hex: '#10B981' },
-      { name: 'Siyah', hex: '#000000' }
-    ]
+    art: 'dock',
+    colors: COLORS,
   },
   {
-    id: '3',
-    name: 'Şarj Aleti & Aksesuar',
-    description: 'Hızlı şarj doku ve silikon koruma kılıfı paketi',
+    id: 'case',
+    name: 'Aksesuar Kılıfı',
+    tagline: 'Koruyucu Seyahat Kılıfı',
+    description: 'Yüzüğünüz ve şarj aletiniz için koruyucu taşıma kılıfı.',
+    highlights: ['Yüzük + şarj aleti', 'Seyahate uygun'],
     price: 250,
-    imageIcon: '🎁'
-  }
+    art: 'case',
+    colors: COLORS,
+  },
 ];

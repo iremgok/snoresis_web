@@ -1,32 +1,29 @@
-# React + TypeScript + Vite
+# Snoresis AI — Web
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+Snoresis AI için tek sayfalık tanıtım ve e-ticaret sitesi. Vite + React 19 + TypeScript + Tailwind CSS v4.
 
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
-
-## React Compiler
-
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the Oxlint configuration
-
-If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
-
-```json
-{
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "typescript", "oxc"],
-  "options": {
-    "typeAware": true
-  },
-  "rules": {
-    "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }]
-  }
-}
+```bash
+npm install
+npm run dev       # geliştirme sunucusu
+npm run build     # tip kontrolü + üretim derlemesi (dist/)
+npm run lint      # oxlint
 ```
 
-See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
+## Yapı
+
+```
+src/
+  data/site.ts          İletişim, WhatsApp, mağaza bağlantıları ve menü — yayın öncesi güncelleyin
+  data/products.ts      Ürünler, fiyatlar ve renk seçenekleri
+  context/              Sepet durumu (localStorage'da saklanır)
+  components/sections/  Hero, Hakkımızda, Ürünler, Özellikler, Uygulama, İletişim
+  components/cart/      Sepet paneli ve ödeme akışı
+  components/ui/        Logo, ürün çizimleri (SVG), mağaza rozetleri, modal
+```
+
+## Yayın öncesi yapılacaklar
+
+- `src/data/site.ts` içindeki dahili telefon (`+90 232 XXX XX XX`), WhatsApp numarası (`905xxxxxxxxx`) ve App Store / Google Play bağlantılarını gerçek değerlerle değiştirin.
+- İletişim formu (`ContactSection.tsx`) şu an gönderimi simüle eder; mesajların ulaşması için bir API veya form servisine (ör. Formspree, kendi backend'iniz) bağlayın.
+- `src/components/ui/PolicyModal.tsx` içindeki KVKK ve gizlilik metinleri yer tutucudur; hukuki onaylı metinlerle değiştirin.
+- Ödeme akışı bir simülasyondur; kart bilgileri hiçbir yere gönderilmez. Canlı satış için bir ödeme altyapısı (ör. iyzico, PayTR) entegre edilmelidir.
