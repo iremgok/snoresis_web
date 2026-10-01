@@ -15,10 +15,34 @@ export const SITE = {
   googlePlayUrl: 'https://play.google.com/store/apps',
 };
 
+// Satıcı bilgileri Mesafeli Satış Sözleşmesi ve Ön Bilgilendirme Formu'nda gösterilir.
+// MERSİS ve vergi bilgileri boş bırakılırsa metinlerde yer almaz — yayından önce mutlaka doldurun.
+export const COMPANY = {
+  legalName: 'Snoresis AI A.Ş.',
+  address: SITE.address,
+  email: SITE.email,
+  phone: SITE.phone,
+  mersis: '',
+  taxOffice: '',
+  taxNumber: '',
+};
+
 export const NAV_LINKS = [
   { id: 'hakkimizda', label: 'Hakkımızda' },
   { id: 'urunler', label: 'Ürünler' },
   { id: 'ozellikler', label: 'Özellikler' },
   { id: 'uygulama', label: 'Uygulama' },
-  { id: 'iletisim', label: 'İletişim' },
+  { id: 'sss', label: 'SSS' },
+  { id: 'siparis-takip', label: 'Sipariş Takip' },
+  { id: 'iletisim', label: 'Bize Ulaşın' },
 ] as const;
+
+// Ürün iddiaları tek yerde: SSS ve ürün kartları buradan okur.
+// Yayından önce kendi doğrulama testlerinizin ve donanım ölçümlerinizin sonuçlarıyla eşleştirin.
+export const CLAIMS = {
+  accuracy: '%95',
+  batteryNights: 7,
+  chargeHours: 1.5,
+  returnDays: 14,
+  deliveryDays: '1–3 iş günü',
+};

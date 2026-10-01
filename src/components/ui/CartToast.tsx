@@ -21,7 +21,7 @@ export const CartToast = () => {
       <button
         type="button"
         onClick={() => openPanel('cart')}
-        className="cursor-pointer text-sm font-semibold text-sky-300 hover:text-white"
+        className="cursor-pointer text-sm font-semibold text-indigo-300 hover:text-white"
       >
         Sepeti gör
       </button>

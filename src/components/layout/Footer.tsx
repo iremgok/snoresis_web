@@ -1,14 +1,28 @@
-import { useState, type MouseEvent } from 'react';
+import type { MouseEvent } from 'react';
+import { useLegal } from '../../context/legal';
+import { MEDICAL_DISCLAIMER } from '../../data/legal';
 import { NAV_LINKS, SITE } from '../../data/site';
 import { scrollToSection } from '../../lib/format';
+import type { PolicyKey } from '../../types';
 import { Logo } from '../ui/Emblem';
+import { PaymentLogos, SecurityBadges } from '../ui/PaymentBadges';
 import { PhoneNumber } from '../ui/PhoneNumber';
-import { PolicyModal, type PolicyKey } from '../ui/PolicyModal';
 
 const YEAR = new Date().getFullYear();
 
+const LEGAL_LINKS: { key: PolicyKey; label: string }[] = [
+  { key: 'kvkk', label: 'KVKK Aydınlatma Metni' },
+  { key: 'terms', label: 'Kullanıcı Sözleşmesi' },
+  { key: 'distance-sales', label: 'Mesafeli Satış Sözleşmesi' },
+  { key: 'cookies', label: 'Çerez Politikası' },
+  { key: 'returns', label: 'İade ve İptal Koşulları' },
+];
+
+const heading = 'mb-4 text-xs font-semibold tracking-widest text-white/40 uppercase';
+const link = 'cursor-pointer text-left transition hover:text-white';
+
 export const Footer = () => {
-  const [policy, setPolicy] = useState<PolicyKey | null>(null);
+  const { openPolicy, openCookiePreferences } = useLegal();
 
   const go = (e: MouseEvent, id: string) => {
     e.preventDefault();
@@ -17,40 +31,58 @@ export const Footer = () => {
 
   return (
     <footer className="bg-night text-white/70">
-      <div className="container-x grid grid-cols-2 gap-10 py-14 md:grid-cols-[1.4fr_1fr_1fr]">
+      <div className="container-x grid grid-cols-2 gap-10 py-14 md:grid-cols-[1.3fr_0.8fr_1.1fr_1fr]">
         <div className="col-span-2 max-w-xs md:col-span-1">
           <Logo light />
           <p className="mt-4 text-sm leading-relaxed">
             Horlama ve uyku apnesine yapay zeka destekli akıllı çözümler. İzmir'de geliştirildi.
           </p>
+          <SecurityBadges tone="dark" className="mt-6" />
         </div>
         <nav aria-label="Alt menü">
-          <p className="mb-4 text-xs font-semibold tracking-widest text-white/40 uppercase">Sayfa</p>
+          <p className={heading}>Sayfa</p>
           <ul className="space-y-2.5 text-sm">
             {NAV_LINKS.map((l) => (
               <li key={l.id}>
-                <a href={`#${l.id}`} onClick={(e) => go(e, l.id)} className="hover:text-white">
+                <a href={`#${l.id}`} onClick={(e) => go(e, l.id)} className={link}>
                   {l.label}
                 </a>
               </li>
             ))}
           </ul>
         </nav>
+        <nav aria-label="Yasal">
+          <p className={heading}>Yasal</p>
+          <ul className="space-y-2.5 text-sm">
+            {LEGAL_LINKS.map((l) => (
+              <li key={l.key}>
+                <button type="button" onClick={() => openPolicy(l.key)} className={link}>
+                  {l.label}
+                </button>
+              </li>
+            ))}
+            <li>
+              <button type="button" onClick={openCookiePreferences} className={link}>
+                Çerez Tercihleri
+              </button>
+            </li>
+          </ul>
+        </nav>
         <div>
-          <p className="mb-4 text-xs font-semibold tracking-widest text-white/40 uppercase">Destek</p>
+          <p className={heading}>Destek</p>
           <ul className="space-y-2.5 text-sm">
             <li>
-              <a href={SITE.phoneHref} className="tabular-nums hover:text-white">
+              <a href={SITE.phoneHref} className={`${link} tabular-nums`}>
                 <PhoneNumber />
               </a>
             </li>
             <li>
-              <a href={`mailto:${SITE.email}`} className="hover:text-white">
+              <a href={`mailto:${SITE.email}`} className={link}>
                 {SITE.email}
               </a>
             </li>
             <li>
-              <a href={SITE.whatsappUrl} target="_blank" rel="noopener noreferrer" className="hover:text-white">
+              <a href={SITE.whatsappUrl} target="_blank" rel="noopener noreferrer" className={link}>
                 WhatsApp Destek
               </a>
             </li>
@@ -59,20 +91,17 @@ export const Footer = () => {
       </div>
 
       <div className="border-t border-white/10">
-        <div className="container-x flex flex-col gap-3 py-6 text-xs sm:flex-row sm:items-center sm:justify-between">
-          <p>© {YEAR} Snoresis AI. Tüm Hakları Saklıdır.</p>
-          <div className="flex gap-5">
-            <button type="button" onClick={() => setPolicy('kvkk')} className="cursor-pointer hover:text-white">
-              KVKK Aydınlatma Metni
-            </button>
-            <button type="button" onClick={() => setPolicy('privacy')} className="cursor-pointer hover:text-white">
-              Gizlilik Politikası
-            </button>
-          </div>
+        <div className="container-x flex flex-col gap-4 py-6 md:flex-row md:items-center md:justify-between">
+          <p className="max-w-xl text-xs leading-relaxed text-white/45">{MEDICAL_DISCLAIMER}</p>
+          <PaymentLogos tone="dark" />
         </div>
       </div>
 
-      {policy && <PolicyModal policy={policy} onClose={() => setPolicy(null)} />}
+      <div className="border-t border-white/10">
+        <div className="container-x py-5 text-xs">
+          <p>© {YEAR} Snoresis AI A.Ş. Tüm hakları saklıdır.</p>
+        </div>
+      </div>
     </footer>
   );
 };

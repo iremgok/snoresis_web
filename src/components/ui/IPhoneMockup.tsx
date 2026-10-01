@@ -99,7 +99,7 @@ export const IPhoneMockup = ({ className = '' }: { className?: string }) => (
               <span className="flex items-center gap-2">
                 <Emblem size={24} />
                 <span className="font-display text-[0.85rem] font-bold tracking-tight">
-                  Snoresis <span className="text-sky-300">AI</span>
+                  Snoresis <span className="text-indigo-300">AI</span>
                 </span>
               </span>
               <span className="flex items-center gap-1.5 rounded-full bg-emerald-400/10 px-2 py-1 text-[0.58rem] font-semibold text-emerald-300">
@@ -138,7 +138,7 @@ export const IPhoneMockup = ({ className = '' }: { className?: string }) => (
                   <br />& Quality
                 </p>
                 <p className="mt-1.5 font-display text-[1.05rem] leading-[1.25rem] font-bold whitespace-nowrap tabular-nums">
-                  7h 20m <span className="text-[0.56rem] font-semibold text-sky-300">(82%)</span>
+                  7h 20m <span className="text-[0.56rem] font-semibold text-indigo-300">(82%)</span>
                 </p>
                 <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-white/10">
                   <div className="h-full w-[82%] rounded-full bg-gradient-to-r from-brand to-violet" />
@@ -152,7 +152,7 @@ export const IPhoneMockup = ({ className = '' }: { className?: string }) => (
                 <p className="text-[0.62rem] font-semibold">Overnight Vitals</p>
                 <span className="flex gap-2 text-[0.5rem] text-white/55">
                   <span className="flex items-center gap-1">
-                    <span className="h-1 w-2.5 rounded-full bg-sky-400" /> SpO₂
+                    <span className="h-1 w-2.5 rounded-full bg-indigo-400" /> SpO₂
                   </span>
                   <span className="flex items-center gap-1">
                     <span className="h-1 w-2.5 rounded-full bg-rose-400" /> HR
@@ -173,7 +173,7 @@ export const IPhoneMockup = ({ className = '' }: { className?: string }) => (
                 <li
                   key={label}
                   className={`flex flex-1 flex-col items-center gap-0.5 text-[0.5rem] font-medium ${
-                    i === 0 ? 'text-sky-300' : 'text-white/45'
+                    i === 0 ? 'text-indigo-300' : 'text-white/45'
                   }`}
                 >
                   <Icon size={15} strokeWidth={i === 0 ? 2.4 : 2} />

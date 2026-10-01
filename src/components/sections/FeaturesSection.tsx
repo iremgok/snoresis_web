@@ -8,7 +8,7 @@ const ApneaGlyph = () => (
     <path
       d="M0 20 Q8 4 16 20 T32 20 T48 20 T64 20 L70 20 L100 20 Q108 0 116 20 T132 20 T148 20 T164 20"
       fill="none"
-      stroke="#7fb2ff"
+      stroke="#a5b4fc"
       strokeWidth="2"
       strokeLinecap="round"
     />
@@ -52,7 +52,7 @@ const BleGlyph = () => (
     {[0, 1, 2, 3, 4].map((i) => (
       <span
         key={i}
-        className="w-1.5 rounded-full bg-sky-300"
+        className="w-1.5 rounded-full bg-indigo-300"
         style={{ height: 8 + i * 6, opacity: 0.35 + i * 0.15 }}
       />
     ))}
@@ -64,28 +64,28 @@ const FEATURES: { icon: LucideIcon; title: string; text: string; glyph: ReactNod
   {
     icon: Activity,
     title: 'Gerçek Zamanlı Apne Tespiti',
-    text: 'Uyku boyunca nefes duraksamalarını milisaniyelik hassasiyetle kaydeder.',
+    text: 'Nefesiniz durduğu anı gece boyunca yakalar.',
     glyph: <ApneaGlyph />,
-    tint: 'from-sky-400/25',
+    tint: 'from-indigo-400/25',
   },
   {
     icon: HeartPulse,
-    title: 'Biyometrik Veri Analizi',
-    text: 'SpO2 (Kandaki Oksijen) ve Nabız değerlerini anlık izler.',
+    title: 'Biyometrik Analiz',
+    text: 'Kandaki oksijen ve nabzınızı anlık izler.',
     glyph: <VitalsGlyph />,
     tint: 'from-rose-400/25',
   },
   {
     icon: FileText,
-    title: 'Doktor Raporu Oluşturma',
-    text: 'PDF formatında detaylı klinik uyku analiz raporu üretir.',
+    title: 'Doktor Raporu',
+    text: 'Tek dokunuşla paylaşılabilir PDF uyku raporu.',
     glyph: <ReportGlyph />,
     tint: 'from-violet-400/25',
   },
   {
     icon: Bluetooth,
-    title: 'Bluetooth BLE Entegrasyonu',
-    text: 'Düşük güç tüketimi ile kesintisiz veri aktarımı.',
+    title: 'Bluetooth BLE',
+    text: 'Az pil harcar, veriyi kesintisiz aktarır.',
     glyph: <BleGlyph />,
     tint: 'from-emerald-400/25',
   },
@@ -98,34 +98,32 @@ export const FeaturesSection = () => (
     <SoundwaveMesh className="-z-10 text-white opacity-[0.04]" />
 
     <div className="container-x">
-      <div className="mx-auto mb-16 max-w-2xl text-center">
-        <span className="eyebrow text-sky-300">Özellikler</span>
+      <div className="mx-auto mb-12 max-w-2xl text-center">
+        <span className="eyebrow text-indigo-300">Özellikler</span>
         <h2 className="section-title">
           Gece boyunca sessizce çalışır,
           <br className="hidden sm:block" /> sabah size anlatır.
         </h2>
       </div>
 
-      <div className="grid gap-5 sm:grid-cols-2">
+      <div className="mx-auto grid max-w-xs gap-4 sm:max-w-none sm:grid-cols-2 lg:grid-cols-4">
         {FEATURES.map(({ icon: Icon, title, text, glyph, tint }, i) => (
           <article
             key={title}
-            className={`group relative overflow-hidden rounded-3xl border border-white/10 bg-white/[0.04] p-7 backdrop-blur-md transition duration-300 hover:border-white/25 hover:bg-white/[0.07] md:p-8 ${
-              i % 2 === 1 ? 'sm:translate-y-8' : ''
-            }`}
+            className="group relative flex flex-col overflow-hidden rounded-2xl border border-white/10 bg-white/[0.04] p-5 backdrop-blur-md transition duration-300 hover:border-white/25 hover:bg-white/[0.07]"
           >
             <div
               className={`pointer-events-none absolute -top-16 -right-16 h-40 w-40 rounded-full bg-gradient-to-br ${tint} to-transparent blur-2xl blob transition group-hover:scale-125`}
             />
             <div className="flex items-start justify-between">
-              <span className="grid h-12 w-12 place-items-center rounded-2xl border border-white/15 bg-white/10">
-                <Icon size={22} />
+              <span className="grid h-10 w-10 place-items-center rounded-xl border border-white/15 bg-white/10">
+                <Icon size={19} />
               </span>
               <span className="font-display text-sm font-semibold text-white/30 tabular-nums">0{i + 1}</span>
             </div>
-            <h3 className="mt-6 text-2xl font-semibold">{title}</h3>
-            <p className="mt-2 max-w-sm leading-relaxed text-white/65">{text}</p>
-            <div className="mt-7 border-t border-white/10 pt-5">{glyph}</div>
+            <h3 className="mt-4 text-lg font-semibold">{title}</h3>
+            <p className="mt-1 flex-1 text-sm leading-relaxed text-white/65">{text}</p>
+            <div className="mt-5 border-t border-white/10 pt-4">{glyph}</div>
           </article>
         ))}
       </div>

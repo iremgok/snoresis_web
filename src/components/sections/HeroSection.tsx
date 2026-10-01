@@ -68,7 +68,7 @@ const HeroVisual = () => (
         <path
           d={breathPath}
           fill="none"
-          stroke="#7fb2ff"
+          stroke="#a5b4fc"
           strokeWidth="2"
           strokeLinecap="round"
           strokeDasharray="60 180"
@@ -79,7 +79,7 @@ const HeroVisual = () => (
 
     {/* metrik çipleri */}
     <div className="absolute top-[28%] left-0 flex items-center gap-2.5 rounded-2xl border border-white/15 bg-white/[0.08] py-2.5 pr-4 pl-2.5 text-white backdrop-blur-md">
-      <span className="grid h-8 w-8 place-items-center rounded-xl bg-sky-400/20 font-display text-[0.65rem] font-bold text-sky-200">
+      <span className="grid h-8 w-8 place-items-center rounded-xl bg-indigo-400/20 font-display text-[0.65rem] font-bold text-indigo-200">
         O₂
       </span>
       <span className="leading-tight">
@@ -104,7 +104,7 @@ const HeroVisual = () => (
 export const HeroSection = () => (
   <section
     id="top"
-    className="relative isolate overflow-hidden bg-[radial-gradient(120%_90%_at_85%_10%,#0066FF_0%,#0b3a8f_35%,#0A192F_75%)] pt-28 pb-24 text-white md:pt-36 md:pb-32"
+    className="relative isolate overflow-hidden bg-[radial-gradient(120%_90%_at_85%_10%,#312e81_0%,#1e1b4b_38%,#0f172a_78%)] pt-28 pb-24 text-white md:pt-36 md:pb-32"
   >
     <div className="absolute -top-40 -left-32 -z-10 h-[28rem] w-[28rem] animate-drift rounded-full bg-violet/25 blur-3xl blob" />
     <div className="absolute right-[-10%] bottom-[-30%] -z-10 h-[30rem] w-[30rem] rounded-full bg-brand/30 blur-3xl blob" />
@@ -112,17 +112,17 @@ export const HeroSection = () => (
 
     <div className="container-x grid items-center gap-14 lg:grid-cols-[1.05fr_1fr]">
       <div className="max-w-xl">
-        <span className="eyebrow mb-6 rounded-full border border-white/15 bg-white/5 px-3 py-1.5 text-sky-200">
+        <span className="eyebrow mb-6 rounded-full border border-white/15 bg-white/5 px-3 py-1.5 text-indigo-200">
           <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-emerald-400" />
           Yapay zeka destekli uyku sağlığı
         </span>
         <h1 className="text-[2.6rem] leading-[1.02] font-bold sm:text-6xl lg:text-[4.2rem]">
           Uykunuzun Kontrolü{' '}
-          <span className="bg-gradient-to-r from-sky-200 via-white to-violet-200 bg-clip-text text-transparent">
+          <span className="bg-gradient-to-r from-indigo-200 via-white to-violet-200 bg-clip-text text-transparent">
             Artık Sizde
           </span>
         </h1>
-        <p className="mt-6 max-w-lg text-lg leading-relaxed text-blue-100/80">
+        <p className="mt-6 max-w-lg text-lg leading-relaxed text-slate-300">
           Snoresis ile horlama ve uyku apnesini teknolojinin gücüyle kontrol edin. Daha kaliteli uykular için gelişmiş
           çözümler.
         </p>

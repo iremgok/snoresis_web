@@ -19,12 +19,12 @@
       /* React yüklenene kadar gösterilen marka yükleyicisi (SnoresisLoading ile aynı görünüm) */
       .boot { position: fixed; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 20px; background: #fbfaf7; }
       .boot-badge { position: relative; display: grid; place-items: center; }
-      .boot-badge::before { content: ""; position: absolute; width: 96px; height: 96px; border-radius: 50%; background: linear-gradient(135deg, #7b3ff2, #0066ff); opacity: 0.4; filter: blur(24px); animation: boot-breathe 6s ease-in-out infinite; }
+      .boot-badge::before { content: ""; position: absolute; width: 96px; height: 96px; border-radius: 50%; background: linear-gradient(135deg, #7b3ff2, #4f46e5); opacity: 0.4; filter: blur(24px); animation: boot-breathe 6s ease-in-out infinite; }
       .boot-badge svg { position: relative; border-radius: 50%; animation: boot-glow 1.8s ease-in-out infinite; }
       .boot p { margin: 0; font: 600 14px/1.4 "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif; letter-spacing: 0.025em; color: #62748e; }
       @keyframes boot-glow {
-        0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgb(123 63 242 / 0.35), 0 12px 32px -10px rgb(0 102 255 / 0.55); }
-        50% { transform: scale(1.06); box-shadow: 0 0 0 14px rgb(123 63 242 / 0), 0 16px 44px -8px rgb(0 102 255 / 0.75); }
+        0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgb(123 63 242 / 0.35), 0 12px 32px -10px rgb(79 70 229 / 0.55); }
+        50% { transform: scale(1.06); box-shadow: 0 0 0 14px rgb(123 63 242 / 0), 0 16px 44px -8px rgb(79 70 229 / 0.75); }
       }
       @keyframes boot-breathe { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.04); } }
       @media (prefers-reduced-motion: reduce) { .boot-badge::before, .boot-badge svg { animation: none; } }
@@ -39,7 +39,7 @@
             <defs>
               <linearGradient id="boot-g" x1="0" y1="0" x2="1" y2="1">
                 <stop offset="0" stop-color="#7B3FF2" />
-                <stop offset="1" stop-color="#0066FF" />
+                <stop offset="1" stop-color="#4f46e5" />
               </linearGradient>
             </defs>
             <circle cx="24" cy="24" r="24" fill="url(#boot-g)" />

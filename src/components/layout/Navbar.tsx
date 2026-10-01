@@ -25,6 +25,9 @@ const useActiveSection = (ids: readonly string[]) => {
 
 const SECTION_IDS = NAV_LINKS.map((l) => l.id);
 
+// Tüm menü öğeleri aynı tipografiyi paylaşır; yalnızca renk duruma göre değişir.
+const NAV_ITEM = 'text-xs font-semibold sm:text-sm transition';
+
 export const Navbar = () => {
   const { count, openPanel } = useCart();
   const [scrolled, setScrolled] = useState(false);
@@ -67,19 +70,19 @@ export const Navbar = () => {
                 href={`#${link.id}`}
                 onClick={(e) => go(e, link.id)}
                 aria-current={isActive ? 'true' : undefined}
-                className={`relative rounded-full px-3.5 py-2 text-[0.9rem] font-semibold transition xl:px-4 ${
+                className={`relative rounded-full px-2.5 py-2 whitespace-nowrap ${NAV_ITEM} xl:px-3.5 ${
                   solid
                     ? isActive
-                      ? 'text-ink'
-                      : 'text-slate-500 hover:text-ink'
+                      ? 'text-indigo-600'
+                      : 'text-slate-700 hover:text-indigo-600'
                     : isActive
                       ? 'text-white'
-                      : 'text-white/70 hover:text-white'
+                      : 'text-white/75 hover:text-white'
                 }`}
               >
                 {link.label}
                 <span
-                  className={`absolute inset-x-3.5 -bottom-0.5 xl:inset-x-4 h-0.5 rounded-full bg-brand transition-transform duration-300 ${
+                  className={`absolute inset-x-2.5 -bottom-0.5 xl:inset-x-3.5 h-0.5 rounded-full bg-brand transition-transform duration-300 ${
                     isActive ? 'scale-x-100' : 'scale-x-0'
                   }`}
                 />
@@ -92,11 +95,11 @@ export const Navbar = () => {
           <button
             type="button"
             onClick={() => openPanel('cart')}
-            className="relative inline-flex cursor-pointer items-center gap-2 rounded-full bg-brand py-2.5 pr-3 pl-4 text-sm font-semibold text-white shadow-[0_8px_20px_-8px_rgb(0_102_255/0.7)] transition hover:bg-brand-deep active:scale-[0.97]"
-            aria-label={`Sepet, ${count} ürün`}
+            className="relative inline-flex cursor-pointer items-center gap-2 rounded-full bg-brand py-2.5 pr-3 pl-4 text-sm font-semibold text-white shadow-[0_8px_20px_-8px_rgb(79_70_229/0.7)] transition hover:bg-brand-deep active:scale-[0.97]"
+            aria-label={`Satın Al — sepette ${count} ürün`}
           >
             <ShoppingBag size={17} strokeWidth={2.2} />
-            <span>Sepet</span>
+            <span>Satın Al</span>
             <span
               key={count}
               className={`grid h-5 min-w-5 place-items-center rounded-full px-1.5 text-[0.7rem] font-bold tabular-nums ${

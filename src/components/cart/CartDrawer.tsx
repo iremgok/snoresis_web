@@ -22,7 +22,7 @@ export const CartDrawer = () => {
         </div>
       ) : (
         <>
-          <ul className="flex-1 space-y-3 overflow-y-auto px-6 py-2">
+          <ul className="scroll-panel space-y-3 px-6 py-2">
             {items.map((item) => (
               <li key={item.key} className="flex gap-4 rounded-2xl border border-line p-3">
                 <div className="grid h-20 w-20 shrink-0 place-items-center rounded-xl bg-mist">
@@ -79,7 +79,11 @@ export const CartDrawer = () => {
           </ul>
 
           <div className="border-t border-line bg-paper px-6 pt-5 pb-6">
-            <dl className="text-sm">
+            <dl className="space-y-2 text-sm">
+              <div className="flex items-baseline justify-between text-slate-500">
+                <dt>Kargo</dt>
+                <dd className="font-semibold text-emerald-600">Ücretsiz</dd>
+              </div>
               <div className="flex items-baseline justify-between text-ink">
                 <dt className="font-semibold">Toplam</dt>
                 <dd className="font-display text-2xl font-bold tabular-nums">{formatPrice(total)}</dd>

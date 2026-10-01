@@ -7,7 +7,7 @@ export const Emblem = ({ size = 36, className = '' }: { size?: number; className
       <defs>
         <linearGradient id={id} x1="0" y1="0" x2="1" y2="1">
           <stop offset="0" stopColor="#7B3FF2" />
-          <stop offset="1" stopColor="#0066FF" />
+          <stop offset="1" stopColor="#4f46e5" />
         </linearGradient>
       </defs>
       <circle cx="24" cy="24" r="24" fill={`url(#${id})`} />

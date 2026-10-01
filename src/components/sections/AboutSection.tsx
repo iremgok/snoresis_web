@@ -22,11 +22,11 @@ const arc = (cx: number, cy: number, r: number, from: number, to: number) => {
 // Gece boyunca uyku evreleri (derin / REM / hafif / uyanık), 360° = tüm gece
 const STAGES: [number, number, string][] = [
   [4, 58, '#7b3ff2'],
-  [62, 104, '#0066ff'],
+  [62, 104, '#4f46e5'],
   [108, 150, '#7cb4ff'],
   [154, 166, '#c3cad8'],
   [170, 232, '#7b3ff2'],
-  [236, 284, '#0066ff'],
+  [236, 284, '#4f46e5'],
   [288, 340, '#7cb4ff'],
 ];
 
@@ -51,7 +51,7 @@ const AboutVisual = () => (
       <defs>
         <linearGradient id="about-brand" x1="0" y1="0" x2="1" y2="0">
           <stop offset="0" stopColor="#7b3ff2" />
-          <stop offset="1" stopColor="#0066ff" />
+          <stop offset="1" stopColor="#4f46e5" />
         </linearGradient>
         <linearGradient id="about-metal" x1="0" y1="0" x2="1" y2="1">
           <stop offset="0" stopColor="#ffffff" />
@@ -96,7 +96,7 @@ const AboutVisual = () => (
         {STAGES.map(([from, to, color]) => (
           <path key={from} d={arc(160, 172, 110, from, to)} stroke={color} strokeWidth="8" strokeLinecap="round" fill="none" />
         ))}
-        <circle cx="160" cy="172" r="92" fill="none" stroke="#0066ff" strokeOpacity="0.1" strokeDasharray="2 6" />
+        <circle cx="160" cy="172" r="92" fill="none" stroke="#4f46e5" strokeOpacity="0.1" strokeDasharray="2 6" />
         <circle cx="160" cy="172" r="84" fill="url(#about-core)" />
       </g>
 
@@ -118,8 +118,8 @@ const AboutVisual = () => (
         <line x1="0" y1="0" x2="272" y2="0" stroke="#0b1526" strokeOpacity="0.06" />
         <rect x="120" y="-30" width="48" height="44" rx="8" fill="#7b3ff2" opacity="0.07" />
         <path d={pulsePath} fill="none" stroke="url(#about-brand)" strokeWidth="2.2" strokeLinejoin="round" />
-        <circle cx="272" cy="0" r="7" fill="#0066ff" opacity="0.15" />
-        <circle cx="272" cy="0" r="3.2" fill="#0066ff" />
+        <circle cx="272" cy="0" r="7" fill="#4f46e5" opacity="0.15" />
+        <circle cx="272" cy="0" r="3.2" fill="#4f46e5" />
       </g>
     </svg>
 

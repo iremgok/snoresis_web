@@ -6,14 +6,17 @@ import { Navbar } from './components/layout/Navbar';
 import { AboutSection } from './components/sections/AboutSection';
 import { AppDownloadSection } from './components/sections/AppDownloadSection';
 import { ContactSection } from './components/sections/ContactSection';
+import { FaqSection } from './components/sections/FaqSection';
 import { FeaturesSection } from './components/sections/FeaturesSection';
 import { HeroSection } from './components/sections/HeroSection';
+import { OrderTrackingSection } from './components/sections/OrderTrackingSection';
 import { ProductsSection } from './components/sections/ProductsSection';
 import { CartToast } from './components/ui/CartToast';
 import { ErrorBoundary } from './components/ui/ErrorBoundary';
 import { SnoresisLoading } from './components/ui/SnoresisLoading';
 import { useCart } from './context/cart';
 import { CartProvider } from './context/CartProvider';
+import { LegalProvider } from './context/LegalProvider';
 import { ToastProvider } from './context/ToastProvider';
 
 const Panels = () => {
@@ -46,20 +49,24 @@ const BootScreen = () => {
 const App = () => (
   <ErrorBoundary>
     <ToastProvider>
-      <CartProvider>
-        <Navbar />
-        <main>
-          <HeroSection />
-          <AboutSection />
-          <ProductsSection />
-          <FeaturesSection />
-          <AppDownloadSection />
-          <ContactSection />
-        </main>
-        <Footer />
-        <Panels />
-        <CartToast />
-      </CartProvider>
+      <LegalProvider>
+        <CartProvider>
+          <Navbar />
+          <main>
+            <HeroSection />
+            <AboutSection />
+            <ProductsSection />
+            <FeaturesSection />
+            <AppDownloadSection />
+            <FaqSection />
+            <OrderTrackingSection />
+            <ContactSection />
+          </main>
+          <Footer />
+          <Panels />
+          <CartToast />
+        </CartProvider>
+      </LegalProvider>
       <BootScreen />
     </ToastProvider>
   </ErrorBoundary>

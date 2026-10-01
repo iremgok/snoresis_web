@@ -1,11 +1,14 @@
 import { useState } from 'react';
-import { Check, Plus } from 'lucide-react';
+import { BadgeCheck, Check, Plus, RotateCcw, ShieldCheck, Truck } from 'lucide-react';
 import { useCart } from '../../context/cart';
 import { PRODUCTS } from '../../data/products';
+import { REVIEWS } from '../../data/reviews';
+import { CLAIMS } from '../../data/site';
 import { isLight } from '../../lib/color';
-import { formatPrice } from '../../lib/format';
-import type { ColorOption, Product } from '../../types';
+import { formatPrice, formatRating } from '../../lib/format';
+import type { ColorOption, Product, Review } from '../../types';
 import { ProductArt } from '../ui/ProductArt';
+import { Stars } from '../ui/StarRating';
 
 const ColorChips = ({
   colors,
@@ -96,6 +99,14 @@ const ProductCard = ({ product }: { product: Product }) => {
           <div>
             <p className="text-xs font-semibold tracking-wide text-brand">{product.tagline}</p>
             <h3 className={`mt-1 font-bold text-ink ${featured ? 'text-3xl' : 'text-xl'}`}>{product.name}</h3>
+            <a
+              href="#yorumlar"
+              className="mt-2 inline-flex items-center gap-2 text-xs text-slate-500 transition hover:text-ink"
+            >
+              <Stars value={product.rating.average} size={14} />
+              <span className="font-semibold text-ink tabular-nums">{formatRating(product.rating.average)}</span>
+              <span className="tabular-nums">({product.rating.count} değerlendirme)</span>
+            </a>
           </div>
           <p className={`shrink-0 font-display font-bold text-ink tabular-nums ${featured ? 'text-2xl' : 'text-lg'}`}>
             {formatPrice(product.price)}
@@ -137,6 +148,91 @@ const ProductCard = ({ product }: { product: Product }) => {
   );
 };
 
+const DeliveryBanner = () => (
+  <div className="relative isolate mb-8 overflow-hidden rounded-[1.75rem] bg-night px-6 py-5 text-white sm:px-8">
+    <div className="absolute -top-16 -left-10 -z-10 h-48 w-48 rounded-full bg-brand/40 blur-3xl blob" />
+    <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+      <p className="flex items-center gap-3.5">
+        <span className="grid h-11 w-11 shrink-0 place-items-center rounded-2xl bg-brand text-white shadow-[0_8px_20px_-8px_rgb(79_70_229/0.9)]">
+          <Truck size={21} strokeWidth={2.2} />
+        </span>
+        <span>
+          <span className="block font-display text-lg leading-tight font-bold sm:text-xl">
+            Ücretsiz Kargo &amp; 24 Saatte Kargoda
+          </span>
+          <span className="mt-0.5 block text-sm text-white/60">
+            Hafta içi 15.00’e kadar verilen siparişler aynı gün yola çıkar.
+          </span>
+        </span>
+      </p>
+      <ul className="flex flex-wrap gap-x-5 gap-y-2 text-sm text-white/80">
+        <li className="flex items-center gap-1.5">
+          <RotateCcw size={15} className="text-indigo-300" /> {CLAIMS.returnDays} gün koşulsuz iade
+        </li>
+        <li className="flex items-center gap-1.5">
+          <ShieldCheck size={15} className="text-indigo-300" /> 2 yıl garanti
+        </li>
+      </ul>
+    </div>
+  </div>
+);
+
+const dateFmt = new Intl.DateTimeFormat('tr-TR', { day: 'numeric', month: 'long', year: 'numeric' });
+const productName = (id: string) => PRODUCTS.find((p) => p.id === id)?.name ?? '';
+
+const ReviewCard = ({ review }: { review: Review }) => (
+  <figure className="flex flex-col rounded-[1.5rem] border border-line bg-white p-6 shadow-soft">
+    <Stars value={review.rating} />
+    <blockquote className="mt-3 flex-1">
+      <p className="text-[0.95rem] leading-relaxed text-slate-700">{review.body}</p>
+    </blockquote>
+    <figcaption className="mt-5 flex items-center gap-3 border-t border-line pt-4">
+      <span className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-gradient-to-br from-brand to-violet font-display text-sm font-bold text-white">
+        {review.author.charAt(0)}
+      </span>
+      <span className="min-w-0 flex-1 text-xs leading-snug">
+        <span className="flex flex-wrap items-center gap-x-1.5 font-semibold text-ink">
+          {review.author}
+          {review.verified && (
+            <span className="inline-flex items-center gap-0.5 font-medium text-emerald-600">
+              <BadgeCheck size={13} /> Doğrulanmış alıcı
+            </span>
+          )}
+        </span>
+        <span className="block text-slate-500">
+          {review.city} · {productName(review.productId)} · {dateFmt.format(new Date(review.date))}
+        </span>
+      </span>
+    </figcaption>
+  </figure>
+);
+
+const totalReviews = PRODUCTS.reduce((n, p) => n + p.rating.count, 0);
+const averageRating = PRODUCTS.reduce((n, p) => n + p.rating.average * p.rating.count, 0) / totalReviews;
+
+const Reviews = () => (
+  <div id="yorumlar" className="mt-16 scroll-mt-24">
+    <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+      <div>
+        <p className="text-xs font-semibold tracking-[0.18em] text-slate-500 uppercase">Müşteri yorumları</p>
+        <h3 className="mt-2 text-2xl font-bold text-ink sm:text-3xl">Kullananlar ne diyor?</h3>
+      </div>
+      <div className="flex items-center gap-3 rounded-2xl border border-line bg-white px-4 py-3 shadow-soft">
+        <span className="font-display text-3xl leading-none font-bold text-ink tabular-nums">{formatRating(averageRating)}</span>
+        <span className="text-xs text-slate-500">
+          <Stars value={averageRating} size={14} />
+          <span className="mt-1 block tabular-nums">{totalReviews} değerlendirme</span>
+        </span>
+      </div>
+    </div>
+    <div className="grid gap-5 md:grid-cols-3">
+      {REVIEWS.map((r) => (
+        <ReviewCard key={r.id} review={r} />
+      ))}
+    </div>
+  </div>
+);
+
 export const ProductsSection = () => (
   <section id="urunler" className="relative bg-mist py-24 md:py-32">
     <div className="container-x">
@@ -153,11 +249,15 @@ export const ProductsSection = () => (
         </div>
       </div>
 
+      <DeliveryBanner />
+
       <div className="grid gap-6 md:grid-cols-2">
         {PRODUCTS.map((p) => (
           <ProductCard key={p.id} product={p} />
         ))}
       </div>
+
+      <Reviews />
     </div>
   </section>
 );

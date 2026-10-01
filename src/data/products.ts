@@ -9,6 +9,7 @@ export const COLORS: ColorOption[] = [
   { name: 'Mavi', hex: '#3D7BEA' },
 ];
 
+// Puanlar ve yorum sayıları örnektir; mağaza yorum sisteminizden gelen gerçek değerlerle değiştirin.
 export const PRODUCTS: Product[] = [
   {
     id: 'ring',
@@ -19,6 +20,7 @@ export const PRODUCTS: Product[] = [
     highlights: ['SpO2 ölçümü', 'Nabız takibi', 'Apne tespiti', 'Bluetooth BLE'],
     price: 6999,
     art: 'ring',
+    rating: { average: 4.8, count: 312 },
     colors: COLORS,
     featured: true,
   },
@@ -30,6 +32,7 @@ export const PRODUCTS: Product[] = [
     highlights: ['Manyetik hizalama', 'Komodin dostu'],
     price: 499,
     art: 'dock',
+    rating: { average: 4.9, count: 148 },
     colors: COLORS,
   },
   {
@@ -40,6 +43,7 @@ export const PRODUCTS: Product[] = [
     highlights: ['Yüzük + şarj aleti', 'Seyahate uygun'],
     price: 250,
     art: 'case',
+    rating: { average: 4.7, count: 96 },
     colors: COLORS,
   },
 ];

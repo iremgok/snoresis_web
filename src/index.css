@@ -1,18 +1,19 @@
 @import "tailwindcss";
 
+/* Göz yormayan palet: slate-50 zemin, slate-800 metin, indigo/lacivert vurgular */
 @theme {
   --font-display: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
 
-  --color-brand: #0066ff;
-  --color-brand-deep: #0052cc;
-  --color-violet: #7b3ff2;
-  --color-night: #0a192f;
-  --color-night-2: #0f2442;
-  --color-ink: #0b1526;
-  --color-mist: #f4f6fb;
-  --color-paper: #fbfaf7;
-  --color-line: #e4e8f0;
+  --color-brand: #4f46e5;
+  --color-brand-deep: #4338ca;
+  --color-violet: #7c3aed;
+  --color-night: #0f172a;
+  --color-night-2: #1e293b;
+  --color-ink: #1e293b;
+  --color-mist: #f1f5f9;
+  --color-paper: #f8fafc;
+  --color-line: #e2e8f0;
 
   --shadow-soft: 0 1px 2px rgb(11 21 38 / 0.04), 0 8px 24px -12px rgb(11 21 38 / 0.12);
   --shadow-lift: 0 2px 4px rgb(11 21 38 / 0.04), 0 24px 48px -20px rgb(11 21 38 / 0.22);
@@ -51,8 +52,8 @@
     to { opacity: 1; }
   }
   @keyframes glow {
-    0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgb(123 63 242 / 0.35), 0 12px 32px -10px rgb(0 102 255 / 0.55); }
-    50% { transform: scale(1.06); box-shadow: 0 0 0 14px rgb(123 63 242 / 0), 0 16px 44px -8px rgb(0 102 255 / 0.75); }
+    0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgb(123 63 242 / 0.35), 0 12px 32px -10px rgb(79 70 229 / 0.55); }
+    50% { transform: scale(1.06); box-shadow: 0 0 0 14px rgb(123 63 242 / 0), 0 16px 44px -8px rgb(79 70 229 / 0.75); }
   }
   @keyframes rise {
     from { opacity: 0; transform: translateY(16px) scale(0.98); }
@@ -81,7 +82,7 @@
     letter-spacing: -0.025em;
   }
   ::selection {
-    background: rgb(0 102 255 / 0.18);
+    background: rgb(79 70 229 / 0.18);
   }
   :focus-visible {
     outline: 2px solid var(--color-brand);
@@ -118,10 +119,19 @@
   @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold transition duration-200 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-50 cursor-pointer;
 }
 @utility btn-primary {
-  @apply btn bg-brand text-white shadow-[0_8px_24px_-8px_rgb(0_102_255/0.6)] hover:bg-brand-deep;
+  @apply btn bg-brand text-white shadow-[0_8px_24px_-8px_rgb(79_70_229/0.6)] hover:bg-brand-deep;
 }
 @utility btn-ghost {
   @apply btn border border-line bg-white text-ink hover:border-ink/30;
+}
+/* Çekmece ve modal içi kaydırma alanları: touchpad/dokunmatik kaydırma sayfaya taşmaz, jestler kilitlenmez */
+@utility scroll-panel {
+  @apply min-h-0 flex-1 overflow-y-auto;
+  overscroll-behavior: contain;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  touch-action: pan-y;
+  scrollbar-gutter: stable;
 }
 @utility field {
   @apply w-full rounded-xl border border-line bg-white px-4 py-3 text-sm text-ink placeholder:text-slate-400 transition outline-none focus:border-brand focus:ring-4 focus:ring-brand/10;

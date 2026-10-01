@@ -48,17 +48,6 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
     return () => window.clearTimeout(t);
   }, [lastAdded]);
 
-  // Panel açıkken sayfa kaydırmasını kilitle.
-  const panelOpen = panel !== 'none';
-  useEffect(() => {
-    if (!panelOpen) return;
-    const prev = document.body.style.overflow;
-    document.body.style.overflow = 'hidden';
-    return () => {
-      document.body.style.overflow = prev;
-    };
-  }, [panelOpen]);
-
   const addItem = useCallback((product: Product, color: ColorOption) => {
     const key = `${product.id}:${color.name}`;
     setItems((prev) => {

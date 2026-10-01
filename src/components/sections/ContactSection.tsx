@@ -1,10 +1,12 @@
 import { useState, type ChangeEvent, type FormEvent, type ReactNode } from 'react';
 import { ArrowUpRight, CircleCheck, Mail, MapPin, MessageCircle, Phone, Send, type LucideIcon } from 'lucide-react';
+import { useLegal } from '../../context/legal';
 import { useToast } from '../../context/toast';
 import { SITE } from '../../data/site';
 import { sendContactMessage } from '../../lib/contact';
 import { Field, TextAreaField } from '../ui/FormField';
 import { PhoneNumber } from '../ui/PhoneNumber';
+import { RobotCheck, type RobotCheckState } from '../ui/RobotCheck';
 import { SnoresisLoading } from '../ui/SnoresisLoading';
 
 const CHANNELS: { icon: LucideIcon; label: string; value: ReactNode; href: string; external?: boolean; accent: string }[] = [
@@ -20,7 +22,7 @@ const CHANNELS: { icon: LucideIcon; label: string; value: ReactNode; href: strin
     label: 'E-posta',
     value: SITE.email,
     href: `mailto:${SITE.email}`,
-    accent: 'bg-sky-500/10 text-sky-600',
+    accent: 'bg-slate-500/10 text-slate-600',
   },
   {
     icon: MessageCircle,
@@ -41,16 +43,22 @@ const CHANNELS: { icon: LucideIcon; label: string; value: ReactNode; href: strin
 ];
 
 type Form = { name: string; email: string; message: string };
-type Errors = Partial<Record<keyof Form, string>>;
+type Errors = Partial<Record<keyof Form | 'captcha', string>>;
 
 const EMPTY: Form = { name: '', email: '', message: '' };
-const LABELS: Record<keyof Form, string> = { name: 'Ad Soyad', email: 'E-posta', message: 'Mesaj' };
+const LABELS: Record<keyof Errors, string> = {
+  name: 'Ad Soyad',
+  email: 'E-posta',
+  message: 'Mesaj',
+  captcha: 'Robot doğrulaması',
+};
 
-const validate = (f: Form): Errors => {
+const validate = (f: Form, captcha: RobotCheckState): Errors => {
   const e: Errors = {};
   if (f.name.trim().length < 3) e.name = 'Lütfen adınızı ve soyadınızı girin';
   if (!/^\S+@\S+\.\S+$/.test(f.email.trim())) e.email = 'Geçerli bir e-posta adresi girin';
   if (f.message.trim().length < 10) e.message = 'Mesajınız en az 10 karakter olmalı';
+  if (captcha !== 'verified') e.captcha = 'Lütfen robot olmadığınızı doğrulayın';
   return e;
 };
 
@@ -58,10 +66,14 @@ const SEND_FAILED = 'Mesajınız gönderilemedi';
 
 const ContactForm = () => {
   const { notify, notifyError } = useToast();
+  const { openPolicy } = useLegal();
   const [form, setForm] = useState<Form>(EMPTY);
   const [errors, setErrors] = useState<Errors>({});
   const [status, setStatus] = useState<'idle' | 'sending' | 'sent'>('idle');
   const [sentTo, setSentTo] = useState('');
+  const [captcha, setCaptcha] = useState<RobotCheckState>('idle');
+  // Bal küpü: insanlar görmez, botlar doldurur
+  const [trap, setTrap] = useState('');
 
   const bind = (key: keyof Form) => ({
     name: key,
@@ -75,26 +87,36 @@ const ContactForm = () => {
 
   const submit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const found = validate(form);
+    const found = validate(form, captcha);
     setErrors(found);
-    const first = Object.keys(found)[0];
-    if (first) {
-      e.currentTarget.querySelector<HTMLElement>(`[name="${first}"]`)?.focus();
+    const keys = Object.keys(found) as (keyof Errors)[];
+    if (keys.length) {
+      e.currentTarget.querySelector<HTMLElement>(`[name="${keys[0]}"]`)?.focus();
+      const onlyCaptcha = keys.length === 1 && keys[0] === 'captcha';
       notify({
         tone: 'error',
         title: SEND_FAILED,
-        message: `Eksik ya da hatalı alanlar: ${Object.keys(found)
-          .map((k) => LABELS[k as keyof Form])
-          .join(', ')}. Lütfen işaretli alanları kontrol ediniz.`,
+        message: onlyCaptcha
+          ? 'Mesajınızı gönderebilmemiz için “Ben robot değilim” kutusunu işaretleyiniz.'
+          : `Eksik ya da hatalı alanlar: ${keys.map((k) => LABELS[k]).join(', ')}. Lütfen işaretli alanları kontrol ediniz.`,
       });
       return;
     }
     setStatus('sending');
     const email = form.email.trim();
+    if (trap) {
+      // Bot olduğu belli: başarılı görünür ama hiçbir şey gönderilmez
+      window.setTimeout(() => {
+        setSentTo(email);
+        setStatus('sent');
+      }, 900);
+      return;
+    }
     try {
       await sendContactMessage({ name: form.name.trim(), email, message: form.message.trim() });
       setSentTo(email);
       setForm(EMPTY);
+      setCaptcha('idle');
       setStatus('sent');
     } catch (err) {
       setStatus('idle');
@@ -128,8 +150,31 @@ const ContactForm = () => {
         <Field label="E-posta Adresi" type="email" autoComplete="email" placeholder="ornek@eposta.com" {...bind('email')} />
       </div>
       <TextAreaField label="Mesajınız" rows={5} placeholder="Size nasıl yardımcı olabiliriz?" {...bind('message')} />
+      <input
+        type="text"
+        name="website"
+        tabIndex={-1}
+        autoComplete="off"
+        aria-hidden="true"
+        value={trap}
+        onChange={(e) => setTrap(e.target.value)}
+        className="absolute -left-[9999px] h-px w-px opacity-0"
+      />
+      <RobotCheck
+        state={captcha}
+        error={errors.captcha}
+        onChange={(next) => {
+          setCaptcha(next);
+          if (errors.captcha) setErrors((er) => ({ ...er, captcha: undefined }));
+        }}
+      />
       <div className="flex flex-col-reverse items-stretch gap-3 pt-1 sm:flex-row sm:items-center sm:justify-between">
-        <p className="text-xs text-slate-500">Bilgileriniz yalnızca size dönüş yapmak için kullanılır.</p>
+        <p className="text-xs text-slate-500">
+          Bilgileriniz yalnızca size dönüş yapmak için kullanılır.{' '}
+          <button type="button" onClick={() => openPolicy('kvkk')} className="cursor-pointer font-semibold text-ink hover:text-brand">
+            KVKK Aydınlatma Metni
+          </button>
+        </p>
         <button type="submit" disabled={status === 'sending'} className="btn-primary px-8 py-3.5">
           {status === 'sending' ? (
             <>
@@ -148,7 +193,7 @@ const ContactForm = () => {
 };
 
 export const ContactSection = () => (
-  <section id="iletisim" className="pb-24 md:pb-32">
+  <section id="iletisim" className="py-24 md:py-32">
     <div className="container-x">
       <div className="max-w-2xl">
         <span className="eyebrow text-brand">
