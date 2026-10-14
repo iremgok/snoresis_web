@@ -85,7 +85,7 @@ export const PageHeading = ({
 }) => (
   <div className="mb-8 sm:mb-10">
     {eyebrow && <span className="eyebrow text-brand">{eyebrow}</span>}
-    <h1 className="mt-3 text-[clamp(1.75rem,7vw,2.5rem)] leading-[1.1] font-bold text-ink">{title}</h1>
+    <h1 className="mt-3 text-[clamp(1.75rem,6vw,2.5rem)] leading-[1.1] font-bold text-ink">{title}</h1>
     {children && <div className="mt-3 text-sm leading-relaxed text-slate-600 sm:text-base">{children}</div>}
   </div>
 );

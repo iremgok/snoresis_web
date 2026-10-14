@@ -117,7 +117,7 @@ export const HeroSection = () => (
           Yapay zeka destekli uyku sağlığı
         </span>
         {/* Mobilde ekran genişliğiyle orantılı (≈32–42px); sm ve üzeri masaüstü ölçüleri korunur */}
-        <h1 className="text-[clamp(2rem,8.6vw,2.6rem)] leading-[1.05] font-bold sm:text-6xl sm:leading-[1.02] lg:text-[4.2rem]">
+        <h1 className="text-[clamp(2rem,7.3vw,2.6rem)] leading-[1.05] font-bold sm:text-6xl sm:leading-[1.02] lg:text-[4.2rem]">
           Uykunuzun Kontrolü{' '}
           <span className="bg-gradient-to-r from-indigo-200 via-white to-violet-200 bg-clip-text text-transparent">
             Artık Sizde

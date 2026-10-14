@@ -67,6 +67,12 @@
     overflow-y: auto;
     -webkit-text-size-adjust: 100%;
   }
+  /* Mobil (<640px): rem tabanlı tüm yazı, boşluk ve görseller ~%15 daha kompakt; masaüstü etkilenmez */
+  @media (max-width: 639.98px) {
+    html {
+      font-size: 85%;
+    }
+  }
   body {
     @apply bg-paper font-sans text-ink antialiased;
   }
@@ -95,11 +101,11 @@
 }
 /* Bölüm başlıkları: önceki 36/48px'e göre ~%17 daha büyük; mobilde ekran genişliğiyle orantılı */
 @utility section-title {
-  @apply mt-4 text-[clamp(2rem,8.6vw,2.6rem)] leading-[1.06] font-bold sm:text-[3.5rem];
+  @apply mt-4 text-[clamp(2rem,7.3vw,2.6rem)] leading-[1.06] font-bold sm:text-[3.5rem];
 }
 /* "Hakkımızda" ve "Ürünler" bölümleri: genel başlıklardan ~%12 küçük, daha dengeli */
 @utility section-title-compact {
-  @apply mt-4 text-[clamp(1.85rem,7.8vw,2.3rem)] leading-[1.08] font-bold sm:text-[3.1rem];
+  @apply mt-4 text-[clamp(1.85rem,6.6vw,2.3rem)] leading-[1.08] font-bold sm:text-[3.1rem];
 }
 /* "Hakkımızda" ve "Ürünler" bölüm etiketleri */
 @utility section-label {

@@ -214,26 +214,26 @@ export const ContactSection = () => (
           <ContactForm />
         </div>
 
-        <ul className="grid content-start gap-3">
+        <ul className="grid content-start gap-2 sm:gap-3">
           {CHANNELS.map(({ icon: Icon, label, value, href, external, accent }) => (
             <li key={label}>
               <a
                 href={href}
                 {...(external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
-                className="group flex items-center gap-4 rounded-2xl border border-line bg-white p-4 shadow-soft transition hover:-translate-y-0.5 hover:border-brand/30 hover:shadow-lift sm:p-5"
+                className="group flex items-center gap-3 rounded-2xl border border-line bg-white p-3 shadow-soft sm:gap-4 transition hover:-translate-y-0.5 hover:border-brand/30 hover:shadow-lift sm:p-5"
               >
-                <span className={`grid h-11 w-11 shrink-0 place-items-center rounded-xl ${accent}`}>
-                  <Icon size={20} />
+                <span className={`grid h-9 w-9 shrink-0 place-items-center rounded-lg sm:h-11 sm:w-11 sm:rounded-xl ${accent}`}>
+                  <Icon size={20} className="h-4 w-4 sm:h-5 sm:w-5" />
                 </span>
                 <span className="min-w-0 flex-1">
                   <span className="block text-xs font-semibold tracking-wide text-slate-500 uppercase">{label}</span>
-                  <span className="mt-0.5 block font-display leading-snug font-semibold break-words text-ink tabular-nums sm:text-lg">
+                  <span className="mt-0.5 block font-display text-sm leading-snug font-semibold break-words text-ink tabular-nums sm:text-lg">
                     {value}
                   </span>
                 </span>
                 <ArrowUpRight
                   size={18}
-                  className="shrink-0 text-slate-300 transition group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-brand"
+                  className="h-4 w-4 shrink-0 sm:h-[18px] sm:w-[18px] text-slate-300 transition group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-brand"
                 />
               </a>
             </li>

@@ -126,13 +126,13 @@ export const Navbar = () => {
 
       {menuOpen && (
         <nav className="animate-fade-in border-t border-line bg-white lg:hidden" aria-label="Mobil menü">
-          <div className="container-x flex flex-col py-3">
+          <div className="container-x flex flex-col py-2 sm:py-3">
             {NAV_LINKS.map((link) => (
               <a
                 key={link.id}
                 href={`#${link.id}`}
                 onClick={(e) => go(e, link.id)}
-                className={`flex items-center justify-between rounded-xl px-3 py-3.5 font-display text-lg font-semibold ${
+                className={`flex items-center justify-between rounded-xl px-3 py-2.5 font-display text-base font-semibold sm:py-3.5 sm:text-lg ${
                   active === link.id ? 'text-brand' : 'text-ink'
                 }`}
               >
