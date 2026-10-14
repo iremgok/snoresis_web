@@ -16,14 +16,14 @@ const ApneaGlyph = () => (
 );
 
 const VitalsGlyph = () => (
-  <div className="flex items-end gap-6">
+  <div className="flex flex-wrap items-end gap-x-4 gap-y-1 sm:gap-6">
     <div>
       <p className="text-[0.65rem] tracking-wider text-white/50 uppercase">SpO₂</p>
-      <p className="font-display text-2xl font-semibold tabular-nums">%96</p>
+      <p className="font-display text-xl font-semibold tabular-nums sm:text-2xl">%96</p>
     </div>
     <div>
       <p className="text-[0.65rem] tracking-wider text-white/50 uppercase">Nabız</p>
-      <p className="font-display text-2xl font-semibold tabular-nums">
+      <p className="font-display text-xl font-semibold tabular-nums sm:text-2xl">
         61<span className="ml-1 text-xs text-white/50">bpm</span>
       </p>
     </div>
@@ -31,15 +31,15 @@ const VitalsGlyph = () => (
 );
 
 const ReportGlyph = () => (
-  <div className="flex items-center gap-3">
-    <div className="relative h-12 w-10 rounded-md bg-white/90 p-1.5">
+  <div className="flex items-center gap-2.5 sm:gap-3">
+    <div className="relative h-12 w-10 shrink-0 rounded-md bg-white/90 p-1.5">
       <div className="h-1 w-5 rounded bg-rose-400" />
       <div className="mt-1.5 h-0.5 w-6 rounded bg-slate-300" />
       <div className="mt-1 h-0.5 w-5 rounded bg-slate-300" />
       <div className="mt-1 h-0.5 w-6 rounded bg-slate-300" />
       <span className="absolute right-0 bottom-0 rounded-tl bg-rose-500 px-1 text-[0.5rem] font-bold text-white">PDF</span>
     </div>
-    <p className="text-xs leading-snug text-white/60">
+    <p className="min-w-0 text-[0.7rem] leading-snug break-words text-white/60 sm:text-xs">
       Uyku_Raporu.pdf
       <br />
       <span className="text-white/40">Doktorunuzla paylaşın</span>
@@ -48,7 +48,7 @@ const ReportGlyph = () => (
 );
 
 const BleGlyph = () => (
-  <div className="flex items-center gap-2">
+  <div className="flex flex-wrap items-center gap-1.5 sm:gap-2">
     {[0, 1, 2, 3, 4].map((i) => (
       <span
         key={i}
@@ -56,7 +56,7 @@ const BleGlyph = () => (
         style={{ height: 8 + i * 6, opacity: 0.35 + i * 0.15 }}
       />
     ))}
-    <span className="ml-2 text-xs text-white/60">Bağlı · düşük güç</span>
+    <span className="ml-1 text-[0.7rem] text-white/60 sm:ml-2 sm:text-xs">Bağlı · düşük güç</span>
   </div>
 );
 
@@ -106,24 +106,25 @@ export const FeaturesSection = () => (
         </h2>
       </div>
 
-      <div className="mx-auto grid max-w-xs gap-4 sm:max-w-none sm:grid-cols-2 lg:grid-cols-4">
+      {/* Mobilde 2×2, tablette 2 sütun, masaüstünde 4 sütun */}
+      <div className="grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4">
         {FEATURES.map(({ icon: Icon, title, text, glyph, tint }, i) => (
           <article
             key={title}
-            className="group relative flex flex-col overflow-hidden rounded-2xl border border-white/10 bg-white/[0.04] p-5 backdrop-blur-md transition duration-300 hover:border-white/25 hover:bg-white/[0.07]"
+            className="group relative flex min-w-0 flex-col overflow-hidden rounded-2xl border border-white/10 bg-white/[0.04] p-3.5 backdrop-blur-md sm:p-5 transition duration-300 hover:border-white/25 hover:bg-white/[0.07]"
           >
             <div
               className={`pointer-events-none absolute -top-16 -right-16 h-40 w-40 rounded-full bg-gradient-to-br ${tint} to-transparent blur-2xl blob transition group-hover:scale-125`}
             />
             <div className="flex items-start justify-between">
-              <span className="grid h-10 w-10 place-items-center rounded-xl border border-white/15 bg-white/10">
-                <Icon size={19} />
+              <span className="grid h-9 w-9 place-items-center rounded-xl border border-white/15 bg-white/10 sm:h-10 sm:w-10">
+                <Icon size={19} className="h-[17px] w-[17px] sm:h-[19px] sm:w-[19px]" />
               </span>
-              <span className="font-display text-sm font-semibold text-white/30 tabular-nums">0{i + 1}</span>
+              <span className="font-display text-xs font-semibold text-white/30 tabular-nums sm:text-sm">0{i + 1}</span>
             </div>
-            <h3 className="mt-4 text-lg font-semibold">{title}</h3>
-            <p className="mt-1 flex-1 text-sm leading-relaxed text-white/65">{text}</p>
-            <div className="mt-5 border-t border-white/10 pt-4">{glyph}</div>
+            <h3 className="mt-3 text-[0.95rem] leading-snug font-semibold sm:mt-4 sm:text-lg sm:leading-normal">{title}</h3>
+            <p className="mt-1 flex-1 text-xs leading-relaxed text-white/65 sm:text-sm">{text}</p>
+            <div className="mt-4 border-t border-white/10 pt-3 sm:mt-5 sm:pt-4">{glyph}</div>
           </article>
         ))}
       </div>

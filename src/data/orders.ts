@@ -5,7 +5,7 @@ import type { TrackedOrder } from '../types';
 const hoursAgo = (h: number) => new Date(Date.now() - h * 3_600_000).toISOString();
 const daysFromNow = (d: number) => new Date(Date.now() + d * 86_400_000).toISOString().slice(0, 10);
 
-const RING = { name: 'Snoresis Akıllı Yüzük', price: 6999 };
+const WRISTBAND = { name: 'Snoresis Akıllı Bileklik', price: 6999 };
 
 export const DEMO_EMAIL = 'ornek@snoresis.com';
 
@@ -18,7 +18,7 @@ export const DEMO_ORDERS: TrackedOrder[] = [
     location: 'Snoresis Depo · İzmir',
     estimatedDelivery: daysFromNow(3),
     items: [
-      { ...RING, color: 'Siyah', quantity: 1 },
+      { ...WRISTBAND, color: 'Siyah', quantity: 1 },
       { name: 'Aksesuar Kılıfı', color: 'Gri', quantity: 1, price: 250 },
     ],
     total: 7249,
@@ -33,7 +33,7 @@ export const DEMO_ORDERS: TrackedOrder[] = [
     carrier: 'Yurtiçi Kargo',
     location: 'İzmir Transfer Merkezi',
     estimatedDelivery: daysFromNow(1),
-    items: [{ ...RING, color: 'Gold', quantity: 1 }],
+    items: [{ ...WRISTBAND, color: 'Gold', quantity: 1 }],
     total: 6999,
     events: [
       { at: hoursAgo(4), label: 'Transfer merkezinden çıktı', location: 'İzmir Transfer Merkezi' },

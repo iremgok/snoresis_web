@@ -15,7 +15,8 @@ const loadConsent = (): CookieConsent | null => {
   }
 };
 
-export const LegalProvider = ({ children }: { children: ReactNode }) => {
+/** `cookieBanner={false}`: mobil uygulamanın WebView'inde (çerez kullanmayan ödeme sayfası) bant gösterilmez. */
+export const LegalProvider = ({ children, cookieBanner = true }: { children: ReactNode; cookieBanner?: boolean }) => {
   const [policy, setPolicy] = useState<PolicyKey | null>(null);
   const [consent, setConsent] = useState<CookieConsent | null>(loadConsent);
   const [bannerMode, setBannerMode] = useState<'summary' | 'preferences' | null>(() =>
@@ -43,7 +44,7 @@ export const LegalProvider = ({ children }: { children: ReactNode }) => {
   return (
     <LegalContext.Provider value={value}>
       {children}
-      {bannerMode && (
+      {cookieBanner && bannerMode && (
         <CookieBanner
           mode={bannerMode}
           initial={consent}

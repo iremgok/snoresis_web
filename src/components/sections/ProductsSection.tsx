@@ -53,7 +53,8 @@ const ColorChips = ({
   </fieldset>
 );
 
-const ProductCard = ({ product }: { product: Product }) => {
+/** `wide`: ikili ızgarada tek kalan kart; masaüstünde tam genişlikte, görsel solda yatay düzen. */
+const ProductCard = ({ product, wide = false }: { product: Product; wide?: boolean }) => {
   const { addItem } = useCart();
   const [color, setColor] = useState(product.colors[0]);
   const [justAdded, setJustAdded] = useState(false);
@@ -69,16 +70,18 @@ const ProductCard = ({ product }: { product: Product }) => {
     <article
       className={`group relative flex flex-col overflow-hidden rounded-[1.75rem] border border-line bg-white shadow-soft transition duration-300 hover:-translate-y-1 hover:shadow-lift ${
         featured ? 'md:row-span-2' : ''
-      }`}
+      } ${wide ? 'md:col-span-2 md:flex-row' : ''}`}
     >
       <div
         className={`relative flex items-center justify-center bg-[radial-gradient(80%_70%_at_50%_45%,#ffffff_0%,#eef2f9_100%)] ${
-          featured ? 'aspect-[5/4] md:aspect-auto md:flex-1' : 'aspect-[16/9]'
+          featured
+            ? 'aspect-[5/4] md:aspect-auto md:flex-1'
+            : `aspect-[16/9] ${wide ? 'md:aspect-auto md:w-2/5 md:shrink-0' : ''}`
         }`}
       >
-        {featured && (
+        {(featured || product.badge) && (
           <span className="absolute top-5 left-5 rounded-full bg-brand/10 px-3 py-1 text-xs font-semibold text-brand">
-            Amiral ürün
+            {featured ? 'Amiral ürün' : product.badge}
           </span>
         )}
         {featured && (
@@ -94,7 +97,7 @@ const ProductCard = ({ product }: { product: Product }) => {
         />
       </div>
 
-      <div className={`flex flex-col gap-5 ${featured ? 'p-7 md:p-8' : 'p-6'}`}>
+      <div className={`flex flex-col gap-5 ${featured ? 'p-7 md:p-8' : 'p-6'} ${wide ? 'md:flex-1 md:p-8' : ''}`}>
         <div className="flex items-start justify-between gap-4">
           <div>
             <p className="text-xs font-semibold tracking-wide text-brand">{product.tagline}</p>
@@ -108,7 +111,14 @@ const ProductCard = ({ product }: { product: Product }) => {
               <span className="tabular-nums">({product.rating.count} değerlendirme)</span>
             </a>
           </div>
-          <p className={`shrink-0 font-display font-bold text-ink tabular-nums ${featured ? 'text-2xl' : 'text-lg'}`}>
+          <p
+            className={`shrink-0 text-right font-display font-bold text-ink tabular-nums ${featured ? 'text-2xl' : 'text-lg'}`}
+          >
+            {product.oldPrice && (
+              <span className="block text-xs font-semibold text-slate-400 line-through">
+                {formatPrice(product.oldPrice)}
+              </span>
+            )}
             {formatPrice(product.price)}
           </p>
         </div>
@@ -218,7 +228,9 @@ const Reviews = () => (
         <h3 className="mt-2 text-2xl font-bold text-ink sm:text-3xl">Kullananlar ne diyor?</h3>
       </div>
       <div className="flex items-center gap-3 rounded-2xl border border-line bg-white px-4 py-3 shadow-soft">
-        <span className="font-display text-3xl leading-none font-bold text-ink tabular-nums">{formatRating(averageRating)}</span>
+        <span className="font-display text-3xl leading-none font-bold text-ink tabular-nums">
+          {formatRating(averageRating)}
+        </span>
         <span className="text-xs text-slate-500">
           <Stars value={averageRating} size={14} />
           <span className="mt-1 block tabular-nums">{totalReviews} değerlendirme</span>
@@ -242,9 +254,10 @@ export const ProductsSection = () => (
             <span className="h-0.5 w-10 rounded-full bg-brand" />
             Ürünler
           </p>
-          <h2 className="section-title-compact text-ink">Gecenizi tamamlayan üçlü</h2>
+          <h2 className="section-title-compact text-ink">Gecenizi tamamlayan set</h2>
           <p className="mt-4 text-slate-600">
-            Akıllı yüzük ölçer, şarj ünitesi hazır tutar, kılıf yolda korur. Renginizi seçin, sepete ekleyin.
+            Akıllı bileklik ve parmak klipsi ölçer, şarj ünitesi hazır tutar, kılıf yolda korur. Renginizi seçin, sepete
+            ekleyin.
           </p>
         </div>
       </div>
@@ -252,8 +265,8 @@ export const ProductsSection = () => (
       <DeliveryBanner />
 
       <div className="grid gap-6 md:grid-cols-2">
-        {PRODUCTS.map((p) => (
-          <ProductCard key={p.id} product={p} />
+        {PRODUCTS.map((p, i) => (
+          <ProductCard key={p.id} product={p} wide={i === PRODUCTS.length - 1 && PRODUCTS.length % 2 === 0} />
         ))}
       </div>
 

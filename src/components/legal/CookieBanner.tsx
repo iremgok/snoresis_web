@@ -53,29 +53,36 @@ export const CookieBanner = ({ mode, initial, onModeChange, onSave, onOpenPolicy
     <div
       role="region"
       aria-label="Çerez tercihleri"
-      className="animate-rise fixed inset-x-3 bottom-3 z-[45] sm:inset-x-auto sm:right-6 sm:bottom-6 sm:left-6 lg:left-auto lg:max-w-xl"
+      className="animate-rise fixed inset-x-2 bottom-[max(0.5rem,env(safe-area-inset-bottom))] z-[45] sm:inset-x-auto sm:right-6 sm:bottom-6 sm:left-6 lg:left-auto lg:max-w-xl"
     >
-      <div className="rounded-3xl border border-line bg-white/95 p-5 shadow-lift backdrop-blur-xl sm:p-6">
+      {/* Mobilde ekranın altında kompakt bant; sm ve üzerinde önceki kart görünümü */}
+      <div className="rounded-2xl border border-line bg-white/95 p-3.5 shadow-lift backdrop-blur-xl sm:rounded-3xl sm:p-6">
         <div className="flex items-start gap-3.5">
-          <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-brand/10 text-brand">
+          <span className="hidden h-10 w-10 shrink-0 sm:grid place-items-center rounded-xl bg-brand/10 text-brand">
             <Cookie size={20} />
           </span>
           <div className="min-w-0">
-            <p className="font-display font-semibold text-ink">Çerezleri kullanıyoruz</p>
-            <p className="mt-1 text-[0.82rem] leading-relaxed text-slate-600">
-              Sepetinizi hatırlamak ve ödemeyi güvenle tamamlamak için zorunlu çerezler kullanıyoruz. Analitik ve
-              pazarlama çerezleri ise yalnızca onayınızla çalışır. Ayrıntılar için {policyLink}.
+            <p className="font-display text-sm font-semibold text-ink sm:text-base">Çerezleri kullanıyoruz</p>
+            <p className="mt-0.5 text-xs leading-snug text-slate-600 sm:mt-1 sm:text-[0.82rem] sm:leading-relaxed">
+              <span className="sm:hidden">
+                Zorunlu çerezler sepet ve ödeme içindir; analitik ve pazarlama çerezleri yalnızca onayınızla çalışır.
+              </span>
+              <span className="hidden sm:inline">
+                Sepetinizi hatırlamak ve ödemeyi güvenle tamamlamak için zorunlu çerezler kullanıyoruz. Analitik ve
+                pazarlama çerezleri ise yalnızca onayınızla çalışır.
+              </span>{' '}
+              Ayrıntılar için {policyLink}.
             </p>
           </div>
         </div>
 
         {mode === 'preferences' && (
-          <ul className="mt-4 max-h-[40dvh] divide-y divide-line overflow-y-auto overscroll-contain rounded-2xl border border-line">
+          <ul className="mt-3 max-h-[38dvh] divide-y sm:mt-4 sm:max-h-[40dvh] divide-line overflow-y-auto overscroll-contain rounded-2xl border border-line">
             {CATEGORIES.map(({ key, title, text }) => {
               const necessary = key === 'necessary';
               const checked = necessary || choice[key as keyof Choice];
               return (
-                <li key={key} className="flex items-center justify-between gap-4 px-4 py-3">
+                <li key={key} className="flex items-center justify-between gap-3 px-3 py-2.5 sm:gap-4 sm:px-4 sm:py-3">
                   <div>
                     <p className="text-sm font-semibold text-ink">{title}</p>
                     <p className="text-xs text-slate-500">{text}</p>
@@ -92,17 +99,17 @@ export const CookieBanner = ({ mode, initial, onModeChange, onSave, onOpenPolicy
           </ul>
         )}
 
-        <div className="mt-4 flex flex-col-reverse gap-2 sm:flex-row sm:justify-end">
+        <div className="mt-3 flex gap-2 sm:mt-4 sm:justify-end">
           {mode === 'summary' ? (
-            <button type="button" onClick={() => onModeChange('preferences')} className="btn-ghost py-2.5">
+            <button type="button" onClick={() => onModeChange('preferences')} className="btn-ghost flex-1 px-3 py-2 text-xs sm:flex-none sm:px-6 sm:py-2.5 sm:text-sm">
               Tercihleri Yönet
             </button>
           ) : (
-            <button type="button" onClick={() => onSave(choice)} className="btn-ghost py-2.5">
+            <button type="button" onClick={() => onSave(choice)} className="btn-ghost flex-1 px-3 py-2 text-xs sm:flex-none sm:px-6 sm:py-2.5 sm:text-sm">
               Seçimleri Kaydet
             </button>
           )}
-          <button type="button" onClick={() => onSave({ analytics: true, marketing: true })} className="btn-primary py-2.5">
+          <button type="button" onClick={() => onSave({ analytics: true, marketing: true })} className="btn-primary flex-1 px-3 py-2 text-xs sm:flex-none sm:px-6 sm:py-2.5 sm:text-sm">
             Tümünü Kabul Et
           </button>
         </div>

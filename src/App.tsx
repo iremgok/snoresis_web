@@ -18,6 +18,7 @@ import { useCart } from './context/cart';
 import { CartProvider } from './context/CartProvider';
 import { LegalProvider } from './context/LegalProvider';
 import { ToastProvider } from './context/ToastProvider';
+import { useHashScroll } from './lib/useHashScroll';
 
 const Panels = () => {
   const { panel } = useCart();
@@ -46,30 +47,34 @@ const BootScreen = () => {
   return <SnoresisLoading variant="screen" leaving={phase === 'leaving'} />;
 };
 
-const App = () => (
-  <ErrorBoundary>
-    <ToastProvider>
-      <LegalProvider>
-        <CartProvider>
-          <Navbar />
-          <main>
-            <HeroSection />
-            <AboutSection />
-            <ProductsSection />
-            <FeaturesSection />
-            <AppDownloadSection />
-            <FaqSection />
-            <OrderTrackingSection />
-            <ContactSection />
-          </main>
-          <Footer />
-          <Panels />
-          <CartToast />
-        </CartProvider>
-      </LegalProvider>
-      <BootScreen />
-    </ToastProvider>
-  </ErrorBoundary>
-);
+const App = () => {
+  // Uygulamadan gelen /#siparis-takip gibi derin bağlantılar doğrudan bölümü açar.
+  useHashScroll();
+  return (
+    <ErrorBoundary>
+      <ToastProvider>
+        <LegalProvider>
+          <CartProvider>
+            <Navbar />
+            <main>
+              <HeroSection />
+              <AboutSection />
+              <ProductsSection />
+              <FeaturesSection />
+              <AppDownloadSection />
+              <FaqSection />
+              <OrderTrackingSection />
+              <ContactSection />
+            </main>
+            <Footer />
+            <Panels />
+            <CartToast />
+          </CartProvider>
+        </LegalProvider>
+        <BootScreen />
+      </ToastProvider>
+    </ErrorBoundary>
+  );
+};
 
 export default App;

@@ -30,27 +30,58 @@ export const ProductArt = ({ art, color, className = '' }: Props) => {
       </defs>
       <ellipse cx="100" cy="180" rx="64" ry="8" fill={`url(#s${uid})`} />
 
-      {art === 'ring' && (
+      {art === 'wristband' && (
         <g>
-          {/* gövde kalınlığı */}
-          <ellipse cx="100" cy="102" rx="62" ry="64" fill="none" stroke={dark} strokeWidth="22" />
-          {/* ön yüz */}
-          <ellipse cx="100" cy="96" rx="62" ry="64" fill="none" stroke={`url(#b${uid})`} strokeWidth="20" />
-          <ellipse cx="100" cy="96" rx="72" ry="74" fill="none" stroke={edge} strokeWidth="1" />
-          <ellipse cx="100" cy="96" rx="52" ry="54" fill="none" stroke={edge} strokeWidth="1" />
-          {/* parlama */}
+          {/* kayış: arka yarısı gölgede, ön yarısı renkli */}
+          <ellipse cx="100" cy="104" rx="70" ry="44" fill="none" stroke={dark} strokeWidth="20" />
+          <ellipse cx="100" cy="98" rx="70" ry="44" fill="none" stroke={`url(#b${uid})`} strokeWidth="18" />
+          <ellipse cx="100" cy="98" rx="79" ry="53" fill="none" stroke={edge} strokeWidth="1" />
           <path
-            d="M52 62 A62 64 0 0 1 112 32.6"
+            d="M44 74 A70 44 0 0 1 112 54.4"
             fill="none"
             stroke="#fff"
-            strokeOpacity="0.55"
-            strokeWidth="4"
+            strokeOpacity="0.5"
+            strokeWidth="3.5"
             strokeLinecap="round"
           />
-          {/* sensörler */}
-          <rect x="86" y="146" width="28" height="9" rx="4.5" fill={shade(color, -0.65)} />
-          <circle cx="94" cy="150.5" r="2" fill="#ff4d6d" />
-          <circle cx="106" cy="150.5" r="2" fill="#4dd6ff" />
+          {/* sensör modülü */}
+          <rect x="66" y="118" width="68" height="40" rx="15" fill={shade(color, -0.6)} />
+          <rect x="66" y="114" width="68" height="40" rx="15" fill="#1b2232" stroke={edge} />
+          <rect x="74" y="121" width="52" height="26" rx="9" fill="#0d1320" />
+          <path
+            d="M80 134 h8 l4 -7 l5 13 l4 -6 h19"
+            fill="none"
+            stroke="#4dd6ff"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+        </g>
+      )}
+
+      {art === 'clip' && (
+        <g>
+          {/* gövde ve menteşe */}
+          <rect x="36" y="76" width="128" height="80" rx="34" fill={dark} />
+          <rect x="36" y="68" width="128" height="80" rx="34" fill={`url(#b${uid})`} stroke={edge} />
+          <path d="M40 108 H160" stroke={shade(color, -0.5)} strokeWidth="2" />
+          <rect x="30" y="98" width="14" height="20" rx="6" fill={shade(color, -0.35)} />
+          {/* parmak yuvası */}
+          <ellipse cx="160" cy="108" rx="10" ry="16" fill="#0d1320" />
+          <path
+            d="M60 80 Q100 70 140 80"
+            fill="none"
+            stroke="#fff"
+            strokeOpacity="0.45"
+            strokeWidth="3"
+            strokeLinecap="round"
+          />
+          {/* ekran */}
+          <rect x="70" y="84" width="54" height="18" rx="6" fill="#0d1320" />
+          <text x="80" y="97.5" fontFamily="Arial, sans-serif" fontSize="11" fontWeight="700" fill="#4dd6ff">
+            97
+          </text>
+          <circle cx="112" cy="93" r="3" fill="#ff4d6d" />
         </g>
       )}
 
@@ -63,12 +94,27 @@ export const ProductArt = ({ art, color, className = '' }: Props) => {
           <ellipse cx="100" cy="116" rx="18" ry="4" fill="none" stroke="#fff" strokeOpacity="0.35" />
           <circle cx="146" cy="142" r="3" fill="#2ee6a6" />
           <circle cx="146" cy="142" r="7" fill="#2ee6a6" opacity="0.18" />
-          <path d="M54 108 Q100 98 146 108" fill="none" stroke="#fff" strokeOpacity="0.4" strokeWidth="2" strokeLinecap="round" />
+          <path
+            d="M54 108 Q100 98 146 108"
+            fill="none"
+            stroke="#fff"
+            strokeOpacity="0.4"
+            strokeWidth="2"
+            strokeLinecap="round"
+          />
           <rect x="18" y="130" width="18" height="6" rx="3" fill="#2a2f3a" />
           <path d="M18 133 H4" stroke="#2a2f3a" strokeWidth="3" strokeLinecap="round" />
-          {/* yuvaya oturan yüzük silüeti */}
-          <ellipse cx="100" cy="86" rx="26" ry="27" fill="none" stroke="#c9ced8" strokeOpacity="0.9" strokeWidth="8" />
-          <path d="M80 72 A26 27 0 0 1 104 59" fill="none" stroke="#fff" strokeOpacity="0.7" strokeWidth="2" strokeLinecap="round" />
+          {/* yuvaya oturan bileklik sensör modülü */}
+          <rect x="76" y="80" width="48" height="30" rx="11" fill="#1b2232" stroke="#c9ced8" strokeOpacity="0.6" />
+          <rect x="83" y="86" width="34" height="17" rx="6" fill="#0d1320" />
+          <path
+            d="M80 82 Q100 76 120 82"
+            fill="none"
+            stroke="#fff"
+            strokeOpacity="0.5"
+            strokeWidth="2"
+            strokeLinecap="round"
+          />
         </g>
       )}
 
@@ -79,7 +125,14 @@ export const ProductArt = ({ art, color, className = '' }: Props) => {
           <path d="M30 116 H170" stroke={shade(color, -0.5)} strokeWidth="2" />
           <path d="M30 118 H170" stroke="#fff" strokeOpacity="0.25" strokeWidth="1" />
           <rect x="88" y="112" width="24" height="10" rx="5" fill={shade(color, -0.35)} />
-          <path d="M58 82 Q100 70 142 82" fill="none" stroke="#fff" strokeOpacity="0.45" strokeWidth="3" strokeLinecap="round" />
+          <path
+            d="M58 82 Q100 70 142 82"
+            fill="none"
+            stroke="#fff"
+            strokeOpacity="0.45"
+            strokeWidth="3"
+            strokeLinecap="round"
+          />
           <circle cx="100" cy="144" r="7" fill="none" stroke="#fff" strokeOpacity="0.5" strokeWidth="1.5" />
         </g>
       )}

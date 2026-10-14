@@ -32,7 +32,7 @@ const STAGES: [number, number, string][] = [
 
 const TICKS = Array.from({ length: 60 }, (_, i) => i * 6);
 
-// Parmak ucu PPG nabız dalgası; ortadaki düzleşme bir apne olayını işaret eder
+// PPG nabız dalgası; ortadaki düzleşme bir apne olayını işaret eder
 const pulsePath = (() => {
   const pts: string[] = [];
   for (let x = 0; x <= 272; x += 2) {
@@ -100,17 +100,30 @@ const AboutVisual = () => (
         <circle cx="160" cy="172" r="84" fill="url(#about-core)" />
       </g>
 
-      {/* akıllı yüzük: perspektifte metal gövde ve optik sensör ışığı */}
+      {/* akıllı bileklik: perspektifte kayış ve önde ekranlı sensör modülü */}
       <g>
-        <ellipse cx="160" cy="214" rx="60" ry="9" fill="#0b1526" opacity="0.08" />
-        <ellipse cx="160" cy="180" rx="56" ry="24" fill="none" stroke="url(#about-metal-edge)" strokeWidth="15" />
-        <ellipse cx="160" cy="171" rx="56" ry="24" fill="none" stroke="url(#about-metal)" strokeWidth="15" />
-        <ellipse cx="160" cy="171" rx="49" ry="18" fill="none" stroke="#5b6883" strokeOpacity="0.35" strokeWidth="1.5" />
-        <path d="M112 162 C128 147 192 147 208 162" fill="none" stroke="#fff" strokeWidth="2.5" strokeLinecap="round" opacity="0.9" />
-        <ellipse cx="160" cy="198" rx="30" ry="12" fill="url(#about-sensor)" />
-        <rect x="153" y="190" width="14" height="6" rx="3" fill="#0b1526" opacity="0.65" />
-        <circle cx="157" cy="193" r="1.6" fill="#7cb4ff" />
-        <circle cx="163" cy="193" r="1.6" fill="#ff6b8a" />
+        <ellipse cx="160" cy="222" rx="66" ry="9" fill="#0b1526" opacity="0.08" />
+        {/* kayış: alt kenar (kalınlık) ve üst yüzey */}
+        <ellipse cx="160" cy="176" rx="60" ry="25" fill="none" stroke="url(#about-metal-edge)" strokeWidth="18" />
+        <ellipse cx="160" cy="166" rx="60" ry="25" fill="none" stroke="url(#about-metal)" strokeWidth="18" />
+        <ellipse cx="160" cy="166" rx="51" ry="17" fill="none" stroke="#5b6883" strokeOpacity="0.3" strokeWidth="1.5" />
+        <path d="M110 156 C126 140 194 140 210 156" fill="none" stroke="#fff" strokeWidth="2.5" strokeLinecap="round" opacity="0.9" />
+        {/* optik sensör ışığı */}
+        <ellipse cx="160" cy="210" rx="36" ry="12" fill="url(#about-sensor)" />
+        {/* sensör modülü */}
+        <rect x="126" y="176" width="68" height="36" rx="12" fill="#5b6883" />
+        <rect x="126" y="172" width="68" height="36" rx="12" fill="#1b2232" />
+        <rect x="133" y="178" width="54" height="24" rx="8" fill="#0d1320" />
+        <path
+          d="M139 190 h9 l4 -6 l5 12 l4 -6 h20"
+          fill="none"
+          stroke="#7cb4ff"
+          strokeWidth="1.8"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+        <circle cx="181" cy="183" r="1.6" fill="#ff6b8a" />
+        <path d="M134 174 Q160 170 186 174" fill="none" stroke="#fff" strokeOpacity="0.25" strokeWidth="1.5" strokeLinecap="round" />
       </g>
 
       {/* nabız dalgası */}

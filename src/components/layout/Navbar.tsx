@@ -56,8 +56,8 @@ export const Navbar = () => {
         solid ? 'border-b border-line/80 bg-white/85 backdrop-blur-xl' : 'border-b border-transparent bg-transparent'
       }`}
     >
-      <div className="container-x flex h-16 items-center justify-between gap-4 lg:h-18">
-        <a href="#top" onClick={(e) => go(e, 'top')} aria-label="Snoresis AI ana sayfa">
+      <div className="container-x flex h-16 items-center justify-between gap-2 sm:gap-4 lg:h-18">
+        <a href="#top" onClick={(e) => go(e, 'top')} aria-label="Snoresis AI ana sayfa" className="min-w-0 shrink">
           <Logo light={!solid} />
         </a>
 
@@ -91,18 +91,19 @@ export const Navbar = () => {
           })}
         </nav>
 
-        <div className="flex items-center gap-2">
+        <div className="flex shrink-0 items-center gap-1 sm:gap-2">
           <button
             type="button"
             onClick={() => openPanel('cart')}
-            className="relative inline-flex cursor-pointer items-center gap-2 rounded-full bg-brand py-2.5 pr-3 pl-4 text-sm font-semibold text-white shadow-[0_8px_20px_-8px_rgb(79_70_229/0.7)] transition hover:bg-brand-deep active:scale-[0.97]"
+            className="relative inline-flex cursor-pointer items-center gap-1.5 rounded-full bg-brand py-2 pr-2 pl-3 text-xs font-semibold whitespace-nowrap sm:gap-2 sm:py-2.5 sm:pr-3 sm:pl-4 sm:text-sm text-white shadow-[0_8px_20px_-8px_rgb(79_70_229/0.7)] transition hover:bg-brand-deep active:scale-[0.97]"
             aria-label={`Satın Al — sepette ${count} ürün`}
           >
-            <ShoppingBag size={17} strokeWidth={2.2} />
+            {/* Mobilde kompakt (15px); sm ve üzerinde masaüstü boyutu (17px) */}
+            <ShoppingBag size={17} strokeWidth={2.2} className="h-[15px] w-[15px] sm:h-[17px] sm:w-[17px]" />
             <span>Satın Al</span>
             <span
               key={count}
-              className={`grid h-5 min-w-5 place-items-center rounded-full px-1.5 text-[0.7rem] font-bold tabular-nums ${
+              className={`grid h-[18px] min-w-[18px] place-items-center rounded-full px-1 text-[0.65rem] sm:h-5 sm:min-w-5 sm:px-1.5 sm:text-[0.7rem] font-bold tabular-nums ${
                 count > 0 ? 'animate-pop bg-white text-brand' : 'bg-white/20 text-white'
               }`}
             >
@@ -112,7 +113,7 @@ export const Navbar = () => {
           <button
             type="button"
             onClick={() => setMenuOpen((o) => !o)}
-            className={`grid h-10 w-10 cursor-pointer place-items-center rounded-full lg:hidden ${
+            className={`grid h-9 w-9 cursor-pointer place-items-center rounded-full sm:h-10 sm:w-10 lg:hidden ${
               solid ? 'text-ink hover:bg-mist' : 'text-white hover:bg-white/10'
             }`}
             aria-label={menuOpen ? 'Menüyü kapat' : 'Menüyü aç'}

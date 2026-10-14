@@ -15,7 +15,7 @@ export const CartDrawer = () => {
             <ShoppingBag size={28} />
           </span>
           <p className="mt-5 font-display text-lg font-semibold text-ink">Sepetiniz şimdilik boş</p>
-          <p className="mt-1 text-sm text-slate-500">Akıllı yüzükle başlamaya ne dersiniz?</p>
+          <p className="mt-1 text-sm text-slate-500">Akıllı bileklikle başlamaya ne dersiniz?</p>
           <button type="button" onClick={closePanel} className="btn-primary mt-6">
             Alışverişe Devam Et
           </button>

@@ -24,9 +24,9 @@ export const Emblem = ({ size = 36, className = '' }: { size?: number; className
 };
 
 export const Logo = ({ light = false }: { light?: boolean }) => (
-  <span className="flex items-center gap-2.5">
-    <Emblem />
-    <span className={`font-display text-xl font-bold tracking-tight ${light ? 'text-white' : 'text-ink'}`}>
+  <span className="flex items-center gap-2 sm:gap-2.5">
+    <Emblem className="h-8 w-8 sm:h-9 sm:w-9" />
+    <span className={`font-display text-lg font-bold sm:text-xl tracking-tight ${light ? 'text-white' : 'text-ink'}`}>
       Snoresis
       <span className="ml-1 align-super text-[0.6rem] font-semibold tracking-widest text-brand">AI</span>
     </span>

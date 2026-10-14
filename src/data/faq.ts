@@ -6,14 +6,14 @@ export const FAQ: FaqItem[] = [
     id: 'nedir',
     question: 'Snoresis nedir ve ne işe yarar?',
     answer: [
-      'Snoresis, horlama ve nefes duraksamalarını evde takip etmenizi sağlayan akıllı bir yüzük ve mobil uygulamadır. Gece boyunca SpO₂, nabız ve nefes ritminizi ölçer; sabah size okunabilir bir uyku raporu sunar.',
+      'Snoresis, horlama ve nefes duraksamalarını evde takip etmenizi sağlayan akıllı bir bileklik, isteğe bağlı parmak klipsi ve mobil uygulamadır. Gece boyunca SpO₂, nabız ve nefes ritminizi ölçer; sabah size okunabilir bir uyku raporu sunar.',
     ],
   },
   {
     id: 'kullanim',
     question: 'Snoresis Cihazı ve şarj ünitesi nasıl kullanılır?',
     answer: [
-      'Yatmadan önce yüzüğü işaret ya da orta parmağınıza takın ve uygulamada “Uykuyu Başlat”a dokunun. Sabah yüzüğü manyetik şarj ünitesine bırakmanız yeterli; mıknatıs yüzüğü kendiliğinden hizalar ve veriler telefonunuza otomatik aktarılır.',
+      'Yatmadan önce bilekliği takın (dilerseniz Parmak Klipsi Pro’yu da parmağınıza yerleştirin) ve uygulamada “Uykuyu Başlat”a dokunun. Sabah bilekliği manyetik şarj ünitesine bırakmanız yeterli; mıknatıs cihazı kendiliğinden hizalar ve veriler telefonunuza otomatik aktarılır.',
     ],
   },
   {
@@ -28,7 +28,7 @@ export const FAQ: FaqItem[] = [
     id: 'sarj',
     question: 'Şarjı ne kadar süre dayanır?',
     answer: [
-      `Tam dolu bir yüzük ${CLAIMS.batteryNights} geceye kadar dayanır ve yaklaşık ${CLAIMS.chargeHours.toLocaleString('tr-TR')} saatte tamamen şarj olur. Pil azaldığında uygulama sizi akşamdan uyarır.`,
+      `Tam dolu bir bileklik ${CLAIMS.batteryNights} geceye kadar dayanır ve yaklaşık ${CLAIMS.chargeHours.toLocaleString('tr-TR')} saatte tamamen şarj olur. Pil azaldığında uygulama sizi akşamdan uyarır.`,
     ],
   },
   {

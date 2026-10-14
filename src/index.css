@@ -93,13 +93,13 @@
 @utility container-x {
   @apply mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8;
 }
-/* Bölüm başlıkları: önceki 36/48px'e göre ~%17 daha büyük */
+/* Bölüm başlıkları: önceki 36/48px'e göre ~%17 daha büyük; mobilde ekran genişliğiyle orantılı */
 @utility section-title {
-  @apply mt-4 text-[2.6rem] leading-[1.06] font-bold sm:text-[3.5rem];
+  @apply mt-4 text-[clamp(2rem,8.6vw,2.6rem)] leading-[1.06] font-bold sm:text-[3.5rem];
 }
 /* "Hakkımızda" ve "Ürünler" bölümleri: genel başlıklardan ~%12 küçük, daha dengeli */
 @utility section-title-compact {
-  @apply mt-4 text-[2.3rem] leading-[1.08] font-bold sm:text-[3.1rem];
+  @apply mt-4 text-[clamp(1.85rem,7.8vw,2.3rem)] leading-[1.08] font-bold sm:text-[3.1rem];
 }
 /* "Hakkımızda" ve "Ürünler" bölüm etiketleri */
 @utility section-label {

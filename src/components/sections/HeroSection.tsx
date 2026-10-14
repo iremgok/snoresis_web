@@ -112,29 +112,30 @@ export const HeroSection = () => (
 
     <div className="container-x grid items-center gap-14 lg:grid-cols-[1.05fr_1fr]">
       <div className="max-w-xl">
-        <span className="eyebrow mb-6 rounded-full border border-white/15 bg-white/5 px-3 py-1.5 text-indigo-200">
+        <span className="eyebrow mb-5 rounded-full border border-white/15 bg-white/5 px-3 py-1.5 text-[0.65rem] tracking-[0.14em] text-indigo-200 sm:mb-6 sm:text-xs sm:tracking-[0.18em]">
           <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-emerald-400" />
           Yapay zeka destekli uyku sağlığı
         </span>
-        <h1 className="text-[2.6rem] leading-[1.02] font-bold sm:text-6xl lg:text-[4.2rem]">
+        {/* Mobilde ekran genişliğiyle orantılı (≈32–42px); sm ve üzeri masaüstü ölçüleri korunur */}
+        <h1 className="text-[clamp(2rem,8.6vw,2.6rem)] leading-[1.05] font-bold sm:text-6xl sm:leading-[1.02] lg:text-[4.2rem]">
           Uykunuzun Kontrolü{' '}
           <span className="bg-gradient-to-r from-indigo-200 via-white to-violet-200 bg-clip-text text-transparent">
             Artık Sizde
           </span>
         </h1>
-        <p className="mt-6 max-w-lg text-lg leading-relaxed text-slate-300">
+        <p className="mt-5 max-w-lg text-base leading-relaxed text-slate-300 sm:mt-6 sm:text-lg">
           Snoresis ile horlama ve uyku apnesini teknolojinin gücüyle kontrol edin. Daha kaliteli uykular için gelişmiş
           çözümler.
         </p>
-        <div className="mt-9 flex flex-wrap gap-3">
-          <button type="button" onClick={() => scrollToSection('urunler')} className="btn-primary group px-7 py-3.5">
+        <div className="mt-8 flex flex-wrap gap-2.5 sm:mt-9 sm:gap-3">
+          <button type="button" onClick={() => scrollToSection('urunler')} className="btn-primary group px-5 py-3 sm:px-7 sm:py-3.5">
             Ürünleri Keşfet
             <ArrowRight size={17} className="transition group-hover:translate-x-0.5" />
           </button>
           <button
             type="button"
             onClick={() => scrollToSection('ozellikler')}
-            className="btn border border-white/25 px-7 py-3.5 text-white hover:border-white/60 hover:bg-white/5"
+            className="btn border border-white/25 px-5 py-3 text-white sm:px-7 sm:py-3.5 hover:border-white/60 hover:bg-white/5"
           >
             Daha Fazla Bilgi
           </button>

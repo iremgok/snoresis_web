@@ -3,7 +3,7 @@ export interface ColorOption {
   hex: string;
 }
 
-export type ProductArt = 'ring' | 'dock' | 'case';
+export type ProductArt = 'wristband' | 'clip' | 'dock' | 'case';
 
 export interface Product {
   id: string;
@@ -12,6 +12,10 @@ export interface Product {
   description: string;
   highlights: string[];
   price: number;
+  /** İndirim öncesi fiyat (üstü çizili gösterilir) */
+  oldPrice?: number;
+  /** Kart üzerindeki etiket, ör. "Yeni" */
+  badge?: string;
   art: ProductArt;
   colors: ColorOption[];
   featured?: boolean;

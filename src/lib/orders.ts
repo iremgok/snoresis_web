@@ -1,10 +1,13 @@
 import { DEMO_ORDERS } from '../data/orders';
 import type { CancelReason, CartItem, TrackedOrder } from '../types';
-import { FriendlyError, postJson } from './errors';
+import { ApiError, FriendlyError, postJson } from './errors';
 
-// Sipariş sorgulama ve iptal. VITE_ORDERS_ENDPOINT tanımlıysa API kullanılır; değilse siparişler
-// bu tarayıcıda saklanır (ödeme de simüle edildiği için) ve geliştirme ortamında örnek siparişler eklenir.
-const ENDPOINT = import.meta.env.VITE_ORDERS_ENDPOINT as string | undefined;
+// Sipariş sorgulama ve iptal. Üretimde siparişler Supabase'deki `orders` tablosundan /api/orders
+// üzerinden okunur (web ve mobil uygulama siparişleri birlikte). Geliştirme ortamında (`npm run dev`,
+// API yok) siparişler bu tarayıcıda saklanır ve örnek siparişler eklenir; VITE_ORDERS_ENDPOINT
+// tanımlanarak geliştirmede de API kullanılabilir (ör. `vercel dev` ile `/api/orders`).
+const ENDPOINT =
+  (import.meta.env.VITE_ORDERS_ENDPOINT as string | undefined) ?? (import.meta.env.PROD ? '/api/orders' : undefined);
 const STORAGE_KEY = 'snoresis-orders-v1';
 
 export const CANCEL_REASONS: { value: CancelReason; label: string }[] = [
@@ -17,6 +20,11 @@ export const CANCEL_REASONS: { value: CancelReason; label: string }[] = [
 const NOT_FOUND = new FriendlyError(
   'Bu numara ve e-posta ile eşleşen bir sipariş bulamadık. Sipariş onay e-postanızdaki numarayı ve siparişte kullandığınız e-posta adresini kontrol ediniz.',
   'Sipariş bulunamadı',
+);
+
+const NOT_CANCELLABLE = new FriendlyError(
+  'Siparişiniz kargoya verildiği için artık iptal edilemiyor. Teslim aldıktan sonra 14 gün içinde ücretsiz iade edebilirsiniz.',
+  'İptal edilemedi',
 );
 
 const readStored = (): TrackedOrder[] => {
@@ -45,14 +53,21 @@ const delay = (ms: number) => new Promise((r) => window.setTimeout(r, ms));
 /** Sipariş veya kargo takip numarası + e-posta ile siparişi bulur. */
 export const lookupOrder = async (number: string, email: string): Promise<TrackedOrder> => {
   if (ENDPOINT) {
-    const res = await postJson(`${ENDPOINT}/lookup`, { number: normalize(number), email: email.trim() });
-    return (await res.json()) as TrackedOrder;
+    try {
+      const res = await postJson(`${ENDPOINT}/lookup`, { number: normalize(number), email: email.trim() });
+      return (await res.json()) as TrackedOrder;
+    } catch (err) {
+      if (err instanceof ApiError && err.status === 404) throw NOT_FOUND;
+      throw err;
+    }
   }
   await delay(700);
   if (!navigator.onLine) throw new TypeError('Failed to fetch');
   const key = normalize(number);
   const order = allOrders().find(
-    (o) => (normalize(o.id) === key || (o.trackingNumber && normalize(o.trackingNumber) === key)) && sameEmail(o.email, email),
+    (o) =>
+      (normalize(o.id) === key || (o.trackingNumber && normalize(o.trackingNumber) === key)) &&
+      sameEmail(o.email, email),
   );
   if (!order) throw NOT_FOUND;
   return order;
@@ -60,15 +75,16 @@ export const lookupOrder = async (number: string, email: string): Promise<Tracke
 
 /** Kargoya verilmemiş siparişi seçilen nedenle iptal eder. */
 export const cancelOrder = async (order: TrackedOrder, reason: CancelReason, note?: string): Promise<TrackedOrder> => {
-  if (order.status !== 'preparing') {
-    throw new FriendlyError(
-      'Siparişiniz kargoya verildiği için artık iptal edilemiyor. Teslim aldıktan sonra 14 gün içinde ücretsiz iade edebilirsiniz.',
-      'İptal edilemedi',
-    );
-  }
+  if (order.status !== 'preparing') throw NOT_CANCELLABLE;
   if (ENDPOINT) {
-    const res = await postJson(`${ENDPOINT}/cancel`, { id: order.id, email: order.email, reason, note });
-    return (await res.json()) as TrackedOrder;
+    try {
+      const res = await postJson(`${ENDPOINT}/cancel`, { id: order.id, email: order.email, reason, note });
+      return (await res.json()) as TrackedOrder;
+    } catch (err) {
+      // Sayfa açıkken sipariş kargoya verilmiş olabilir.
+      if (err instanceof ApiError && err.status === 409) throw NOT_CANCELLABLE;
+      throw err;
+    }
   }
   await delay(800);
   if (!navigator.onLine) throw new TypeError('Failed to fetch');
@@ -98,9 +114,6 @@ export const addBusinessDays = (from: Date, days: number) => {
 const isoDate = (d: Date) =>
   `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
 
-/** SNR-2026-8942 biçiminde sipariş numarası */
-export const newOrderId = () => `SNR-${new Date().getFullYear()}-${Math.floor(1000 + Math.random() * 9000)}`;
-
 /** Ödeme tamamlandığında siparişi takip edilebilir hâle getirir. */
 export const recordOrder = (id: string, email: string, items: CartItem[], total: number) => {
   const now = new Date();
@@ -111,7 +124,12 @@ export const recordOrder = (id: string, email: string, items: CartItem[], total:
     status: 'preparing',
     location: 'Snoresis Depo · İzmir',
     estimatedDelivery: isoDate(addBusinessDays(now, 3)),
-    items: items.map((i) => ({ name: i.product.name, color: i.color.name, quantity: i.quantity, price: i.product.price })),
+    items: items.map((i) => ({
+      name: i.product.name,
+      color: i.color.name,
+      quantity: i.quantity,
+      price: i.product.price,
+    })),
     total,
     events: [{ at: now.toISOString(), label: 'Sipariş alındı, hazırlanıyor', location: 'Snoresis Depo · İzmir' }],
   };
